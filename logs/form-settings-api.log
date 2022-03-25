@@ -248,3 +248,4 @@ Wed Mar 23 2022 20:50:52 GMT+0800 (China Standard Time) | INFO | form-settings-a
 Wed Mar 23 2022 20:51:31 GMT+0800 (China Standard Time) | INFO | form-settings-api.log | API: /getAllFormSettings | data:{"message":"API Done","total":4,"status":true} | 
 Wed Mar 23 2022 20:51:34 GMT+0800 (China Standard Time) | INFO | form-settings-api.log | API: /getAllFormSettings | data:{"message":"API Done","total":4,"status":true} | 
 Thu Mar 24 2022 08:46:11 GMT+0800 (China Standard Time) | INFO | form-settings-api.log | API: /getAllFormSettings | data:{"message":"API Done","total":4,"status":true} | 
+Thu Mar 24 2022 10:23:38 GMT+0800 (China Standard Time) | INFO | form-settings-api.log | API: /getAllFormSettings | data:{"message":"API Done","total":4,"status":true} | 

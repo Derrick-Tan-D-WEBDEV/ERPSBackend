@@ -11,6 +11,7 @@ import { User } from "../entity/User";
 import argon2 from "argon2";
 import { createAccessToken } from "../auth";
 import { platform } from "os";
+import { Console } from "console";
 
 const logger = new LoggerService("users-api");
 const UserRouter = Router();
@@ -35,6 +36,7 @@ UserRouter.get("/getAllTypeUsers", async (_req, res) => {
         "CASE WHEN user.status = 1 then 'Show' else 'Hide' end",
         "status"
       )
+      .where("user.employeeID != 0 ")
       .getRawMany()
       .then((data) => {
         logger.info_obj("API: " + "/getAllTypeUsers", {
@@ -75,7 +77,7 @@ UserRouter.get("/getAllTypeUser", async (_req, res) => {
         "CASE WHEN user.status = 1 then 'Show' else 'Hide' end",
         "status"
       )
-      .where("user.status = 1")
+      .where("user.status = 1  AND user.employeeID != 0 ")
       .getRawMany()
       .then((data) => {
         logger.info_obj("API: " + "/getAllTypeUser", {
@@ -116,7 +118,7 @@ UserRouter.get("/getAllUsers", async (_req, res) => {
         "CASE WHEN user.status = 1 then 'Show' else 'Hide' end",
         "status"
       )
-      .andWhere('user.role = "User"')
+      .andWhere('user.role = "User" AND user.employeeID != 0 ')
       .getRawMany()
       .then((data) => {
         logger.info_obj("API: " + "/getAllUsers", {
@@ -157,7 +159,7 @@ UserRouter.get("/getAllUser", async (_req, res) => {
         "CASE WHEN user.status = 1 then 'Show' else 'Hide' end",
         "status"
       )
-      .where("user.status = 1")
+      .where("user.status = 1  AND user.employeeID != 0 ")
       .andWhere('user.role = "User"')
       .getRawMany()
       .then((data) => {
@@ -528,17 +530,21 @@ UserRouter.post("/getOneUser", async (req, res) => {
         "user.email AS email",
         "user.section AS section",
       ])
-      .where("user.status = 1")
-      .andWhere(`user.id = "${id}"`)
-      .getRawMany()
+      .addSelect(
+        "CASE WHEN user.status = 1 then 'Show' else 'Hide' end",
+        "status"
+      )
+      .where(`user.id = "${id}"`)
+      .getRawOne()
       .then((data) => {
         logger.info_obj("API: " + "/getOneUser", {
           message: "API Done",
-          total: data.length,
+          total: 1,
           value: id,
           status: true,
         });
-        res.send({ data, total: data.length, status: true });
+        console.log(id);
+        res.send({ data, total: 1, status: true });
       })
       .catch((e) => {
         logger.error_obj("API: " + "/getOneUser", {
@@ -649,17 +655,20 @@ UserRouter.post("/createUser", async (req, res) => {
     const { employeeID, fullname, name, email, section, role } = values;
 
     const password = await argon2.hash("Greatech123");
-    const checkExist = await UserManager.findOne(User, { employeeID });
+    const checkExist = await UserManager.findOne(User, {
+      where: [{ email }, { employeeID }],
+    });
 
     if (checkExist !== undefined) {
       logger.error_obj("API: " + "/createUser", {
         message:
-          "API Error: " + `Redundant on Employee ID ${values.employeeID}.`,
+          "API Error: " +
+          `Redundant on Employee ID/Email ${values.employeeID} ${values.email}.`,
         value: values,
         status: false,
       });
       return res.send({
-        message: `Redundant on Employee ID ${values.employeeID}.`,
+        message: `Redundant on Employee ID/Email ${values.employeeID} ${values.email}.`,
         status: false,
       });
     }
@@ -743,25 +752,257 @@ UserRouter.post("/changeRole", async (req, res) => {
   }
 });
 
-UserRouter.post("/editUsers", async (req, res) => {});
+UserRouter.post("/editUsers", async (req, res) => {
+  const { id, values } = req.body;
+
+  const { fullname, name, email, employeeID, status, section } = values;
+  try {
+    const user = await UserManager.findOne(User, { id });
+
+    const checkExist = await UserManager.findOne(User, {
+      where: [{ email }, { employeeID }],
+    });
+    console.log(checkExist);
+    if (checkExist !== undefined) {
+      if (checkExist?.id != id) {
+        logger.error_obj("API: " + "/editUsers", {
+          message:
+            "API Error: " +
+            `Redundant on Employee ID/Email ${values.employeeID} ${values.email}.`,
+          value: values,
+          status: false,
+        });
+        return res.send({
+          message: `Redundant on Employee ID/Email ${values.employeeID} ${values.email}.`,
+          status: false,
+        });
+      }
+    }
+
+    if (user === undefined) {
+      logger.error_obj("API: " + "/editUsers", {
+        message: "API Error: Id Not Found",
+        value: { id },
+        status: false,
+      });
+    }
+
+    await UserManager.update(
+      User,
+      { id },
+      {
+        fullname,
+        name,
+        email,
+        employeeID,
+        section,
+        status: status === "Show" ? 1 : 0,
+      }
+    )
+      .then((data) => {
+        logger.info_obj("API: " + "/editUsers", {
+          message: "API Done",
+          main: data,
+          status: true,
+        });
+        res.send({ data: `Edit Successfully`, main: data, status: true });
+      })
+      .catch((e) => {
+        logger.error_obj("API: " + "/editUsers", {
+          message: "API Error" + e,
+          value: { id, fullname, name, email, employeeID, status, section },
+          status: false,
+        });
+        res.send({ data: `Error On Edit To DB: ` + e, status: false });
+      });
+  } catch (e) {
+    logger.error_obj("API: " + "/editUsers", {
+      message: "API Failed: " + e,
+      value: { id, fullname, name, email, employeeID, status, section },
+      status: false,
+    });
+    res.send({ message: e, status: false });
+  }
+});
+
+UserRouter.post("/editUsersProfile", async (req, res) => {
+  const { id, values } = req.body;
+
+  const { fullname, name, email, employeeID } = values;
+  try {
+    const user = await UserManager.findOne(User, { id });
+
+    const checkExist = await UserManager.findOne(User, {
+      where: [{ email }, { employeeID }],
+    });
+
+    if (checkExist !== undefined) {
+      if (checkExist?.id != id) {
+        logger.error_obj("API: " + "/editUsers", {
+          message:
+            "API Error: " +
+            `Redundant on Employee ID/Email ${values.employeeID} ${values.email}.`,
+          value: values,
+          status: false,
+        });
+        return res.send({
+          message: `Redundant on Employee ID/Email ${values.employeeID} ${values.email}.`,
+          status: false,
+        });
+      }
+    }
+
+    if (user === undefined) {
+      logger.error_obj("API: " + "/editUsersProfile", {
+        message: "API Error: Id Not Found",
+        value: { id },
+        status: false,
+      });
+    }
+
+    await UserManager.update(
+      User,
+      { id },
+      {
+        fullname,
+        name,
+        email,
+        employeeID,
+      }
+    )
+      .then((data) => {
+        logger.info_obj("API: " + "/editUsersProfile", {
+          message: "API Done",
+          main: data,
+          status: true,
+        });
+        res.send({ data: `Edit Successfully`, main: data, status: true });
+      })
+      .catch((e) => {
+        logger.error_obj("API: " + "/editUsersProfile", {
+          message: "API Error" + e,
+          value: { id, fullname, name, email, employeeID },
+          status: false,
+        });
+        res.send({ data: `Error On Edit To DB: ` + e, status: false });
+      });
+  } catch (e) {
+    logger.error_obj("API: " + "/editUsersProfile", {
+      message: "API Failed: " + e,
+      value: { id, fullname, name, email, employeeID },
+      status: false,
+    });
+    res.send({ message: e, status: false });
+  }
+});
 
 // Delete
-UserRouter.post("/deleteUsers", async (req, res) => {});
+UserRouter.post("/deleteUsers", async (req, res) => {
+  const { id } = req.body;
+  try {
+    const user = await UserManager.findOne(User, { id });
+
+    if (user === undefined) {
+      logger.error_obj("API: " + "/deleteUsers", {
+        message: "API Error: Id Not Found",
+        value: { id },
+        status: false,
+      });
+    }
+
+    await UserManager.update(
+      User,
+      { id },
+      {
+        status: 0,
+      }
+    )
+      .then((data) => {
+        logger.info_obj("API: " + "/deleteUsers", {
+          message: "API Done",
+          main: data,
+          status: true,
+        });
+        res.send({ data: `Delete Successfully`, main: data, status: true });
+      })
+      .catch((e) => {
+        logger.error_obj("API: " + "/deleteUsers", {
+          message: "API Error" + e,
+          value: { id },
+          status: false,
+        });
+        res.send({ data: `Error On Delete To DB: ` + e, status: false });
+      });
+  } catch (e) {
+    logger.error_obj("API: " + "/deleteUsers", {
+      message: "API Failed: " + e,
+      value: { id },
+      status: false,
+    });
+    res.send({ message: e, status: false });
+  }
+});
+
+UserRouter.post("/recoverUsers", async (req, res) => {
+  const { id } = req.body;
+  try {
+    const user = await UserManager.findOne(User, { id });
+
+    if (user === undefined) {
+      logger.error_obj("API: " + "/recoverUsers", {
+        message: "API Error: Id Not Found",
+        value: { id },
+        status: false,
+      });
+    }
+
+    await UserManager.update(
+      User,
+      { id },
+      {
+        status: 1,
+      }
+    )
+      .then((data) => {
+        logger.info_obj("API: " + "/recoverUsers", {
+          message: "API Done",
+          main: data,
+          status: true,
+        });
+        res.send({ data: `Recover Successfully`, main: data, status: true });
+      })
+      .catch((e) => {
+        logger.error_obj("API: " + "/recoverUsers", {
+          message: "API Error" + e,
+          value: { id },
+          status: false,
+        });
+        res.send({ data: `Error On Recover To DB: ` + e, status: false });
+      });
+  } catch (e) {
+    logger.error_obj("API: " + "/recoverUsers", {
+      message: "API Failed: " + e,
+      value: { id },
+      status: false,
+    });
+    res.send({ message: e, status: false });
+  }
+});
 
 // Login Function
 UserRouter.post("/loginUser", async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = await UserManager.findOne(User, { email });
+    const user = await UserManager.findOne(User, { email, status: 1 });
 
     if (user === undefined) {
       logger.error_obj("API: " + "/loginUser", {
-        message: "API Error: Email Not Found",
+        message: "API Error: Email Not Found or Account Deactivated",
         value: { email },
         status: false,
       });
       return res.send({
-        message: "Email Not Found",
+        message: "Email Not Found or Account Deactivated",
         value: { email },
         status: false,
       });
