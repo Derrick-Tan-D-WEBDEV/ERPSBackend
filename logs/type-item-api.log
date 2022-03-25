@@ -132,3 +132,7 @@ Wed Mar 23 2022 20:51:34 GMT+0800 (China Standard Time) | INFO | type-item-api.l
 Thu Mar 24 2022 09:24:51 GMT+0800 (China Standard Time) | INFO | type-item-api.log | API: /getAllTypeItems | data:{"message":"API Done","total":380,"status":true} | 
 Thu Mar 24 2022 09:25:01 GMT+0800 (China Standard Time) | INFO | type-item-api.log | API: /recoverTypeItem | data:{"message":"API Done","value":{"generatedMaps":[],"raw":{"fieldCount":0,"affectedRows":1,"insertId":0,"serverStatus":2,"warningCount":0,"message":"(Rows matched: 1  Changed: 1  Warnings: 0","protocol41":true,"changedRows":1},"affected":1},"status":true} | 
 Thu Mar 24 2022 09:25:01 GMT+0800 (China Standard Time) | INFO | type-item-api.log | API: /getAllTypeItems | data:{"message":"API Done","total":380,"status":true} | 
+Fri Mar 25 2022 09:30:11 GMT+0800 (China Standard Time) | INFO | type-item-api.log | API: /getTypeItemByCategory | data:{"message":"API Done","total":8,"status":true} | 
+Fri Mar 25 2022 09:30:27 GMT+0800 (China Standard Time) | INFO | type-item-api.log | API: /getTypeItemByCategory | data:{"message":"API Done","total":8,"status":true} | 
+Fri Mar 25 2022 10:49:08 GMT+0800 (China Standard Time) | INFO | type-item-api.log | API: /getTypeItemByCategory | data:{"message":"API Done","total":11,"status":true} | 
+Fri Mar 25 2022 10:50:46 GMT+0800 (China Standard Time) | INFO | type-item-api.log | API: /getTypeItemByCategory | data:{"message":"API Done","total":11,"status":true} | 

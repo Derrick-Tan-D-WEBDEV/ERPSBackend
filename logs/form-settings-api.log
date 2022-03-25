@@ -249,3 +249,10 @@ Wed Mar 23 2022 20:51:31 GMT+0800 (China Standard Time) | INFO | form-settings-a
 Wed Mar 23 2022 20:51:34 GMT+0800 (China Standard Time) | INFO | form-settings-api.log | API: /getAllFormSettings | data:{"message":"API Done","total":4,"status":true} | 
 Thu Mar 24 2022 08:46:11 GMT+0800 (China Standard Time) | INFO | form-settings-api.log | API: /getAllFormSettings | data:{"message":"API Done","total":4,"status":true} | 
 Thu Mar 24 2022 10:23:38 GMT+0800 (China Standard Time) | INFO | form-settings-api.log | API: /getAllFormSettings | data:{"message":"API Done","total":4,"status":true} | 
+Fri Mar 25 2022 09:30:11 GMT+0800 (China Standard Time) | INFO | form-settings-api.log | API: /getAllFormSettings | data:{"message":"API Done","total":4,"status":true} | 
+Fri Mar 25 2022 09:30:27 GMT+0800 (China Standard Time) | INFO | form-settings-api.log | API: /getAllFormSettings | data:{"message":"API Done","total":4,"status":true} | 
+Fri Mar 25 2022 10:48:46 GMT+0800 (China Standard Time) | INFO | form-settings-api.log | API: /getAllFormSettings | data:{"message":"API Done","total":4,"status":true} | 
+Fri Mar 25 2022 10:48:49 GMT+0800 (China Standard Time) | INFO | form-settings-api.log | API: /getAllFormSettings | data:{"message":"API Done","total":4,"status":true} | 
+Fri Mar 25 2022 10:48:54 GMT+0800 (China Standard Time) | INFO | form-settings-api.log | API: /editFormSettings | data:{"message":"API Done","value":{"generatedMaps":[],"raw":{"fieldCount":0,"affectedRows":1,"insertId":0,"serverStatus":34,"warningCount":1,"message":"(Rows matched: 1  Changed: 1  Warnings: 1","protocol41":true,"changedRows":1},"affected":1},"status":true} | 
+Fri Mar 25 2022 10:49:08 GMT+0800 (China Standard Time) | INFO | form-settings-api.log | API: /getAllFormSettings | data:{"message":"API Done","total":4,"status":true} | 
+Fri Mar 25 2022 10:50:46 GMT+0800 (China Standard Time) | INFO | form-settings-api.log | API: /getAllFormSettings | data:{"message":"API Done","total":4,"status":true} | 

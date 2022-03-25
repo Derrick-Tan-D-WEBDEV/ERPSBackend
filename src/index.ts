@@ -37,6 +37,7 @@ const main = async () => {
   app.use("/TypeItem", require("./routes/typeitem"));
   app.use("/Category", require("./routes/category"));
   app.use("/FormSettings", require("./routes/formsettings"));
+  app.use("/Annoucement", require("./routes/news"));
   app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
   const PORT = process.env.PORT || 4000;

@@ -281,3 +281,15 @@ Wed Mar 23 2022 20:40:01 GMT+0800 (China Standard Time) | INFO | category-api.lo
 Wed Mar 23 2022 20:50:12 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
 Wed Mar 23 2022 20:51:31 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
 Wed Mar 23 2022 20:51:34 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Fri Mar 25 2022 09:30:06 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Fri Mar 25 2022 09:30:09 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Fri Mar 25 2022 09:30:25 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Fri Mar 25 2022 09:30:30 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Fri Mar 25 2022 09:35:25 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Fri Mar 25 2022 10:01:28 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Fri Mar 25 2022 10:01:29 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Fri Mar 25 2022 10:01:31 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Fri Mar 25 2022 10:02:45 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Fri Mar 25 2022 10:49:04 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Fri Mar 25 2022 10:49:06 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Fri Mar 25 2022 10:50:56 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 

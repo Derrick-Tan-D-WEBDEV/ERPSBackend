@@ -1991,4 +1991,39 @@ StandardPartRouter.post("/switchSPUser", async (req, res) => {
   } catch (e) {}
 });
 
+StandardPartRouter.post("/countSPBySection", async (req, res) => {
+  const { sect } = req.body;
+  try {
+    await SPManager.createQueryBuilder(StandardParts, "SP")
+      .select(["SP.id AS id"])
+      .where("SP.status = 1")
+      .andWhere(`SP.section = "${sect}"`)
+      .getCount()
+      .then((data) => {
+        logger.info_obj("API: " + "/countSPBySection", {
+          message: "API Done",
+          total: data,
+          value: sect,
+          status: true,
+        });
+        res.send({ data, total: data, status: true });
+      })
+      .catch((e) => {
+        logger.error_obj("API: " + "/countSPBySection", {
+          message: "API Error: " + e,
+          value: sect,
+          status: false,
+        });
+        res.send({ message: e, status: false });
+      });
+  } catch (e) {
+    logger.error_obj("API: " + "/countSPBySection", {
+      message: "API Failed: " + e,
+      value: sect,
+      status: false,
+    });
+    res.send({ message: e, status: false });
+  }
+});
+
 module.exports = StandardPartRouter;
