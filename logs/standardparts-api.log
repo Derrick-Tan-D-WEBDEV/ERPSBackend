@@ -274,3 +274,15 @@ Fri Mar 25 2022 13:48:52 GMT+0800 (China Standard Time) | INFO | standardparts-a
 Fri Mar 25 2022 13:48:52 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":638,"value":"Vision","status":true} | 
 Fri Mar 25 2022 13:48:52 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 
 Fri Mar 25 2022 13:48:52 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":6313,"value":"Electrical","status":true} | 
+Sat Mar 26 2022 19:41:08 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":15446,"value":"Mechanical","status":true} | 
+Sat Mar 26 2022 19:41:08 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":638,"value":"Vision","status":true} | 
+Sat Mar 26 2022 19:41:08 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 
+Sat Mar 26 2022 19:41:08 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":6313,"value":"Electrical","status":true} | 
+Sat Mar 26 2022 19:41:13 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getSPByCategory | data:{"message":"API Done","total":1610,"value":1,"status":true} | 
+Sat Mar 26 2022 19:41:19 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":638,"value":"Vision","status":true} | 
+Sat Mar 26 2022 19:41:19 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":6313,"value":"Electrical","status":true} | 
+Sat Mar 26 2022 19:41:19 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 
+Sat Mar 26 2022 19:41:19 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":15446,"value":"Mechanical","status":true} | 
+Sat Mar 26 2022 19:41:30 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getSPByCategory | data:{"message":"API Done","total":1610,"value":1,"status":true} | 
+Sat Mar 26 2022 19:41:56 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getSPByCategory | data:{"message":"API Done","total":809,"value":3,"status":true} | 
+Wed Mar 30 2022 08:45:03 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getSPByCategory | data:{"message":"API Done","total":1610,"value":1,"status":true} | 

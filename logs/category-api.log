@@ -293,3 +293,22 @@ Fri Mar 25 2022 10:02:45 GMT+0800 (China Standard Time) | INFO | category-api.lo
 Fri Mar 25 2022 10:49:04 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
 Fri Mar 25 2022 10:49:06 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
 Fri Mar 25 2022 10:50:56 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Fri Mar 25 2022 13:57:10 GMT+0800 (China Standard Time) | ERROR | category-api.log | API: /getAllNewss | data:{"message":"API Error: QueryFailedError: ER_BAD_FIELD_ERROR: Unknown column 'News.category_type' in 'field list'","status":false} | 
+Sat Mar 26 2022 19:41:10 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Sat Mar 26 2022 19:41:24 GMT+0800 (China Standard Time) | ERROR | category-api.log | API: /getAllNewss | data:{"message":"API Error: QueryFailedError: ER_BAD_FIELD_ERROR: Unknown column 'News.category_type' in 'field list'","status":false} | 
+Sat Mar 26 2022 19:41:29 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Wed Mar 30 2022 08:41:49 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Wed Mar 30 2022 08:42:47 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Wed Mar 30 2022 08:43:19 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Wed Mar 30 2022 08:45:03 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Wed Mar 30 2022 08:45:04 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Wed Mar 30 2022 08:46:58 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Wed Mar 30 2022 08:47:02 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Wed Mar 30 2022 08:47:11 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Wed Mar 30 2022 08:47:16 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Wed Mar 30 2022 08:47:55 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Wed Mar 30 2022 08:48:11 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Wed Mar 30 2022 08:48:23 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Wed Mar 30 2022 08:48:27 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Wed Mar 30 2022 08:49:16 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
+Wed Mar 30 2022 08:49:41 GMT+0800 (China Standard Time) | INFO | category-api.log | API: /getAllCategory | data:{"message":"API Done","total":71,"status":true} | 
