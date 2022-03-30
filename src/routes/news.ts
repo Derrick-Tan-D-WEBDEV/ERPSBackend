@@ -22,12 +22,7 @@ SPNewsRouter.get("/", async (_req, res) => {
 SPNewsRouter.get("/getAllNewss", async (_req, res) => {
   try {
     await NewsManager.createQueryBuilder(NewsAnnouncement, "News")
-      .select([
-        "News.id",
-        "News.category_type",
-        "News.description",
-        "News.code",
-      ])
+      .select(["News.id", "News.title", "News.content", "News.datetime"])
       .addSelect(
         "CASE WHEN News.status = 1 then 'Show' else 'Hide' end",
         "status"
