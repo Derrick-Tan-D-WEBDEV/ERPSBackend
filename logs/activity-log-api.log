@@ -1,0 +1,6 @@
+Wed Mar 30 2022 20:02:24 GMT+0800 (Malaysia Time) | INFO | activity-log-api.log | API: /getActivityLogByPartId | data:{"message":"API Done","total":4,"status":true} | 
+Wed Mar 30 2022 20:03:02 GMT+0800 (Malaysia Time) | INFO | activity-log-api.log | API: /getActivityLogByPartId | data:{"message":"API Done","total":4,"status":true} | 
+Wed Mar 30 2022 20:03:03 GMT+0800 (Malaysia Time) | INFO | activity-log-api.log | API: /getActivityLogByPartId | data:{"message":"API Done","total":4,"status":true} | 
+Wed Mar 30 2022 20:04:05 GMT+0800 (Malaysia Time) | INFO | activity-log-api.log | API: /getActivityLogByPartId | data:{"message":"API Done","total":4,"status":true} | 
+Wed Mar 30 2022 20:06:46 GMT+0800 (Malaysia Time) | INFO | activity-log-api.log | API: /getOneActivityLog | data:{"message":"API Done","data":2,"status":true} | 
+Wed Mar 30 2022 20:07:00 GMT+0800 (Malaysia Time) | INFO | activity-log-api.log | API: /getOneActivityLog | data:{"message":"API Done","data":1,"status":true} | 

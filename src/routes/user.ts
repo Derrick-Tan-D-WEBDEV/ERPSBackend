@@ -518,6 +518,48 @@ UserRouter.get("/getAllSuperAdmin", async (_req, res) => {
   }
 });
 
+UserRouter.get("/getUserAdminSuperAdmin", async (_req, res) => {
+  try {
+    await UserManager.createQueryBuilder(User, "user")
+      .select([
+        "user.id AS id",
+        "user.employeeID AS employeeID",
+        "user.fullname AS fullname",
+        "user.name AS name",
+        "user.email AS email",
+        "user.section AS section",
+      ])
+      .addSelect(
+        "CASE WHEN user.status = 1 then 'Show' else 'Hide' end",
+        "status"
+      )
+      .where("user.status = 1")
+      .andWhere('user.role = "SuperAdmin" OR user.role = "Admin" OR user.role = "User" OR user.role = "Developer"')
+      .getRawMany()
+      .then((data) => {
+        logger.info_obj("API: " + "/getUserAdminSuperAdmin", {
+          message: "API Done",
+          total: data.length,
+          status: true,
+        });
+        res.send({ data, total: data.length, status: true });
+      })
+      .catch((e) => {
+        logger.error_obj("API: " + "/getUserAdminSuperAdmin", {
+          message: "API Error: " + e,
+          status: false,
+        });
+        res.send({ message: e, status: false });
+      });
+  } catch (e) {
+    logger.error_obj("API: " + "/getUserAdminSuperAdmin", {
+      message: "API Failed: " + e,
+      status: false,
+    });
+    res.send({ message: e, status: false });
+  }
+})
+
 UserRouter.post("/getOneUser", async (req, res) => {
   const { id } = req.body;
   try {
@@ -825,7 +867,7 @@ UserRouter.post("/editUsers", async (req, res) => {
   }
 });
 
-UserRouter.post("/editUsersProfile", async (req, res) => {
+UserRouter.post("/editUserProfile", async (req, res) => {
   const { id, values } = req.body;
 
   const { fullname, name, email, employeeID } = values;
@@ -1076,11 +1118,9 @@ UserRouter.post("/changePassword", async (req, res) => {
       });
     }
 
-    const checkOldPassword = await UserManager.findOne(User, {
-      password: oldPassword,
-    });
+    const checkOldPassword = await argon2.verify(checkUser.password, oldPassword)
 
-    if (checkOldPassword === undefined) {
+    if (!checkOldPassword) {
       logger.error_obj("API: " + "/changePassword", {
         message: "API Error: Password Incorrect",
         value: { user_id },
@@ -1097,7 +1137,7 @@ UserRouter.post("/changePassword", async (req, res) => {
       User,
       { id: user_id },
       {
-        password: newPassword,
+        password: newPass,
       }
     )
       .then((data) => {

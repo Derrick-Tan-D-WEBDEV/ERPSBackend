@@ -21,7 +21,7 @@ PendingPartRouter.get("/getAllPendings", async (_req, res) => {
         await PendingManager.createQueryBuilder(PendingParts, "P")
             .innerJoinAndSelect("P.user", "U")
             .innerJoinAndSelect("P.spCategory", "C")
-            .innerJoinAndSelect("P.approveUser", "A")
+            // .innerJoinAndSelect("P.approveUser", "A")
             .select(["P.id AS id"])
             .addSelect(["U.fullname AS fullname"])
             .addSelect([
@@ -30,7 +30,7 @@ PendingPartRouter.get("/getAllPendings", async (_req, res) => {
             ])
             .addSelect([
                 "P.type_item AS type_item",
-                "P.product_part_number AS product_part_num",
+                "P.product_part_number AS product_part_number",
                 "P.greatech_drawing_naming AS greatech_drawing_naming",
                 "P.description AS description",
                 "P.brand AS brand",
@@ -49,6 +49,7 @@ PendingPartRouter.get("/getAllPendings", async (_req, res) => {
                 "P.sub AS sub",
                 "P.section AS section"
             ])
+            // .addSelect("A.fullname AS approved_by")
             .addSelect(
                 `CASE WHEN P.status = 0 then 'Pending' 
                       WHEN P.status = 1 then 'Approved'
@@ -95,7 +96,7 @@ PendingPartRouter.get("/getAllPending", async (_req, res) => {
         await PendingManager.createQueryBuilder(PendingParts, "P")
             .innerJoinAndSelect("P.user", "U")
             .innerJoinAndSelect("P.spCategory", "C")
-            .innerJoinAndSelect("P.approveUser", "A")
+            // .innerJoinAndSelect("P.approveUser", "A")
             .select(["P.id AS id"])
             .addSelect(["U.fullname AS fullname"])
             .addSelect([
@@ -104,7 +105,7 @@ PendingPartRouter.get("/getAllPending", async (_req, res) => {
             ])
             .addSelect([
                 "P.type_item AS type_item",
-                "P.product_part_number AS product_part_num",
+                "P.product_part_number AS product_part_number",
                 "P.greatech_drawing_naming AS greatech_drawing_naming",
                 "P.description AS description",
                 "P.brand AS brand",
@@ -170,7 +171,7 @@ PendingPartRouter.get("/getAllApproved", async (_req, res) => {
         await PendingManager.createQueryBuilder(PendingParts, "P")
             .innerJoinAndSelect("P.user", "U")
             .innerJoinAndSelect("P.spCategory", "C")
-            .innerJoinAndSelect("P.approveUser", "A")
+            // .innerJoinAndSelect("P.approveUser", "A")
             .select(["P.id AS id"])
             .addSelect(["U.fullname AS fullname"])
             .addSelect([
@@ -179,7 +180,7 @@ PendingPartRouter.get("/getAllApproved", async (_req, res) => {
             ])
             .addSelect([
                 "P.type_item AS type_item",
-                "P.product_part_number AS product_part_num",
+                "P.product_part_number AS product_part_number",
                 "P.greatech_drawing_naming AS greatech_drawing_naming",
                 "P.description AS description",
                 "P.brand AS brand",
@@ -245,7 +246,7 @@ PendingPartRouter.get("/getAllRejected", async (_req, res) => {
         await PendingManager.createQueryBuilder(PendingParts, "P")
             .innerJoinAndSelect("P.user", "U")
             .innerJoinAndSelect("P.spCategory", "C")
-            .innerJoinAndSelect("P.approveUser", "A")
+            // .innerJoinAndSelect("P.approveUser", "A")
             .select(["P.id AS id"])
             .addSelect(["U.fullname AS fullname"])
             .addSelect([
@@ -254,7 +255,7 @@ PendingPartRouter.get("/getAllRejected", async (_req, res) => {
             ])
             .addSelect([
                 "P.type_item AS type_item",
-                "P.product_part_number AS product_part_num",
+                "P.product_part_number AS product_part_number",
                 "P.greatech_drawing_naming AS greatech_drawing_naming",
                 "P.description AS description",
                 "P.brand AS brand",
@@ -321,7 +322,7 @@ PendingPartRouter.post("/getAllBySection", async (req, res) => {
         await PendingManager.createQueryBuilder(PendingParts, "P")
             .innerJoinAndSelect("P.user", "U")
             .innerJoinAndSelect("P.spCategory", "C")
-            .innerJoinAndSelect("P.approveUser", "A")
+            // .innerJoinAndSelect("P.approveUser", "A")
             .select(["P.id AS id"])
             .addSelect(["U.fullname AS fullname"])
             .addSelect([
@@ -330,7 +331,7 @@ PendingPartRouter.post("/getAllBySection", async (req, res) => {
             ])
             .addSelect([
                 "P.type_item AS type_item",
-                "P.product_part_number AS product_part_num",
+                "P.product_part_number AS product_part_number",
                 "P.greatech_drawing_naming AS greatech_drawing_naming",
                 "P.description AS description",
                 "P.brand AS brand",
@@ -400,7 +401,7 @@ PendingPartRouter.post("/getAllByUser", async (req, res) => {
         await PendingManager.createQueryBuilder(PendingParts, "P")
             .innerJoinAndSelect("P.user", "U")
             .innerJoinAndSelect("P.spCategory", "C")
-            .innerJoinAndSelect("P.approveUser", "A")
+            // .innerJoinAndSelect("P.approveUser", "A")
             .select(["P.id AS id"])
             .addSelect(["U.fullname AS fullname"])
             .addSelect([
@@ -409,7 +410,7 @@ PendingPartRouter.post("/getAllByUser", async (req, res) => {
             ])
             .addSelect([
                 "P.type_item AS type_item",
-                "P.product_part_number AS product_part_num",
+                "P.product_part_number AS product_part_number",
                 "P.greatech_drawing_naming AS greatech_drawing_naming",
                 "P.description AS description",
                 "P.brand AS brand",
@@ -479,7 +480,7 @@ PendingPartRouter.post("/getAllByCategory", async (req, res) => {
         await PendingManager.createQueryBuilder(PendingParts, "P")
             .innerJoinAndSelect("P.user", "U")
             .innerJoinAndSelect("P.spCategory", "C")
-            .innerJoinAndSelect("P.approveUser", "A")
+            // .innerJoinAndSelect("P.approveUser", "A")
             .select(["P.id AS id"])
             .addSelect(["U.fullname AS fullname"])
             .addSelect([
@@ -488,7 +489,7 @@ PendingPartRouter.post("/getAllByCategory", async (req, res) => {
             ])
             .addSelect([
                 "P.type_item AS type_item",
-                "P.product_part_number AS product_part_num",
+                "P.product_part_number AS product_part_number",
                 "P.greatech_drawing_naming AS greatech_drawing_naming",
                 "P.description AS description",
                 "P.brand AS brand",
@@ -558,7 +559,7 @@ PendingPartRouter.post("/getOnePending", async (req, res) => {
         await PendingManager.createQueryBuilder(PendingParts, "P")
             .innerJoinAndSelect("P.user", "U")
             .innerJoinAndSelect("P.spCategory", "C")
-            .innerJoinAndSelect("P.approveUser", "A")
+            // .innerJoinAndSelect("P.approveUser", "A")
             .select(["P.id AS id"])
             .addSelect(["U.fullname AS fullname"])
             .addSelect([
@@ -567,7 +568,7 @@ PendingPartRouter.post("/getOnePending", async (req, res) => {
             ])
             .addSelect([
                 "P.type_item AS type_item",
-                "P.product_part_number AS product_part_num",
+                "P.product_part_number AS product_part_number",
                 "P.greatech_drawing_naming AS greatech_drawing_naming",
                 "P.description AS description",
                 "P.brand AS brand",
@@ -638,13 +639,13 @@ PendingPartRouter.post("/approvePending", async (req, res) => {
         const pending_part = await PendingManager.createQueryBuilder(PendingParts, "P")
                                 .innerJoinAndSelect("P.user", "U")
                                 .innerJoinAndSelect("P.spCategory", "C")
-                                .innerJoinAndSelect("P.approveUser", "A")
+                                // .innerJoinAndSelect("P.approveUser", "A")
                                 .select(["P.id AS id"])
                                 .addSelect(["U.id AS user_id"])
-                                .addSelect(["C.id AS category_id"])
+                                .addSelect(["C.id AS part_id"])
                                 .addSelect([
                                     "P.type_item AS type_item",
-                                    "P.product_part_number AS product_part_num",
+                                    "P.product_part_number AS product_part_number",
                                     "P.greatech_drawing_naming AS greatech_drawing_naming",
                                     "P.description AS description",
                                     "P.brand AS brand",
@@ -679,7 +680,9 @@ PendingPartRouter.post("/approvePending", async (req, res) => {
         if (pending_part.subs != "") {
             let subString = JSON.parse(pending_part.subs);
 
-            pending_part.subs = subString.subs;
+            pending_part.subs = subString.all_sub;
+
+            console.log(pending_part.subs)
 
             data.data = pending_part;
 
@@ -803,7 +806,8 @@ PendingPartRouter.post("/declinePending", async (req, res) => {
 })
 
 PendingPartRouter.post("/addSPPending", async (req, res) => {
-    const { data } = req.body;
+    const data = req.body;
+    console.log(data)
     try {
         const currentDatetime = moment().format();
         const part_id = data.category.Category_id;
@@ -812,6 +816,7 @@ PendingPartRouter.post("/addSPPending", async (req, res) => {
         const vendor = data.vendor;
         const ppn = data.product_part_number;
         const u_id = data.user_id;
+        var vdr = "";
 
         const code = await PendingManager.findOne(SP_Category, { id: part_id });
         const initial = code?.code;
@@ -825,6 +830,13 @@ PendingPartRouter.post("/addSPPending", async (req, res) => {
                 message: `Unable to find code ${part_id}.`,
                 status: false,
             });
+        }
+
+        if (vdr == "Local Vendor") {
+            vdr = "LV";
+        }
+        if (vdr == "Appointed Vendor") {
+            vdr = "AV";
         }
 
         const mainResult = {
@@ -844,7 +856,7 @@ PendingPartRouter.post("/addSPPending", async (req, res) => {
             remark : data.remark,
             assign_material : data.assign_material,
             assign_weight : data.assign_weight,
-            vendor : vendor,
+            vendor : vdr,
             status : 0,
             sub : "",
             section : section
@@ -907,7 +919,8 @@ PendingPartRouter.post("/addSPPending", async (req, res) => {
 })
 
 PendingPartRouter.post("/addSPMSPending", async (req, res) => {
-    const { data } = req.body;
+    const data = req.body;
+    console.log(data)
     try {
         const currentDatetime = moment().format();
         const section = data.category.Category_category_type;
@@ -974,8 +987,8 @@ PendingPartRouter.post("/addSPMSPending", async (req, res) => {
             var sub_temp = {
                 user_id : u_id,
                 part_id : part_id,
-                type_item : type_item,
-                product_part_number : ppn,
+                type_item : element.type_item.TypeItems_type_item,
+                product_part_number : element.product_part_number,
                 greatech_drawing_naming : element.greatech_drawing_naming,
                 description : element.description,
                 brand : element.brand,
@@ -1071,6 +1084,120 @@ PendingPartRouter.post("/addSPMSPending", async (req, res) => {
     }
     catch(e) {
         logger.error_obj("API: " + "/addSPMSPending", {
+            message: "API Failed: " + e,
+            value : data,
+            status: false,
+        });
+        res.send({ message: e, status: false });
+    }
+})
+
+PendingPartRouter.post("/editPending", async (req, res) => {
+    const { data } = req.body;
+    try {
+        const currentDatetime = moment().format();
+        const {
+            id,
+            type_item,
+            product_part_number,
+            greatech_drawing_naming,
+            description,
+            brand,
+            uom,
+            folder_location,
+            _2d_folder,
+            _3d_folder,
+            solidworks_folder,
+            insert_date,
+            update_date,
+            remark,
+            assign_material,
+            assign_weight,
+            vendor, 
+            approved_by,
+            sub,
+            section
+        } = data;
+
+        const subCheckRedundantPending = await PendingManager.findOne(PendingParts, {
+            where: {
+              product_part_number: data.product_part_number,
+              brand: data.brand,
+            },
+        });
+
+        const subCheckRedundantStdParts = await PendingManager.findOne(StandardParts, {
+            where: {
+                product_part_number: data.product_part_number,
+                brand: data.brand,
+            },
+        });
+    
+        if (
+        subCheckRedundantPending !== undefined ||
+        subCheckRedundantStdParts !== undefined
+        ) {
+            logger.error_obj("API: " + "/editPending", {
+                message:
+                "API Error: " +
+                `Redundant on ProductPartNumber ${data.product_part_number} and Brand ${data.brand}.`,
+                status: false,
+            });
+            return res.send({
+                message: `Redundant on ProductPartNumber ${data.product_part_number} and Brand ${data.brand}`,
+                status: false,
+            });
+        }
+
+        await PendingManager.update(PendingParts, { id },
+            {
+                type_item,
+                product_part_number,
+                greatech_drawing_naming,
+                description,
+                brand,
+                uom,
+                folder_location,
+                _2d_folder,
+                _3d_folder,
+                solidworks_folder,
+                insert_date,
+                update_date : currentDatetime,
+                remark,
+                assign_material,
+                assign_weight,
+                vendor, 
+                approved_by,
+                sub,
+                section
+            }
+        )
+        .then((data) => {
+            logger.info_obj("API: " + "/editPending", {
+                message: "API Done",
+                main: data,
+                status: true,
+              });
+              res.send({
+                data: `Update Successfully`,
+                main: data,
+                status: true,
+              });
+        })
+        .catch((e) => {
+            logger.error_obj("API: " + "/editPending", {
+                message: "API Error" + e,
+                value: data,
+                status: false,
+              });
+              res.send({
+                data: `Error On Update Edited Pending Part On DB: ` + e,
+                status: false,
+              });
+        })
+    }
+    catch(e) {
+        logger.error_obj("API: " + "/editPending", {
             message: "API Failed: " + e,
             value : data,
             status: false,

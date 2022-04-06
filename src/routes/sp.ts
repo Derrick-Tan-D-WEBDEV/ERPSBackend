@@ -8,6 +8,7 @@ import { LoggerService } from "../LoggerService";
 import { PendingParts } from "../entity/SP_Pending";
 import { ActivityLog } from "../entity/ActivityLog";
 import { User } from "../entity/User";
+import axios from "axios";
 
 const logger = new LoggerService("standardparts-api");
 const StandardPartRouter = Router();
@@ -186,7 +187,7 @@ StandardPartRouter.post("/getSPByCategorys", async (req, res) => {
       .innerJoinAndSelect("SP.user", "U")
       .innerJoinAndSelect("SP.SPCategory", "C")
       .select(["SP.id AS id"])
-      .addSelect(["U.fullname AS fullname"])
+      .addSelect(["U.fullname AS fullname", "U.id AS user_id"])
       .addSelect([
         "C.description AS category_desc",
         "C.category_type AS category_type",
@@ -251,7 +252,7 @@ StandardPartRouter.post("/getSPByCategory", async (req, res) => {
       .innerJoinAndSelect("SP.user", "U")
       .innerJoinAndSelect("SP.SPCategory", "C")
       .select(["SP.id AS id"])
-      .addSelect(["U.fullname AS fullname"])
+      .addSelect(["U.fullname AS fullname", "U.id AS user_id"])
       .addSelect([
         "C.description AS category_desc",
         "C.category_type AS category_type",
@@ -311,7 +312,7 @@ StandardPartRouter.post("/getSPByCategory", async (req, res) => {
 });
 
 StandardPartRouter.post("/getSPByUserID", async (req, res) => {
-  const { id } = req.body;
+  const { user_id } = req.body;
   try {
     await SPManager.createQueryBuilder(StandardParts, "SP")
       .innerJoinAndSelect("SP.user", "U")
@@ -343,13 +344,13 @@ StandardPartRouter.post("/getSPByUserID", async (req, res) => {
         "SP.section AS section",
       ])
       .where("SP.status = 1")
-      .andWhere(`SP.user_id = ${id}`)
+      .andWhere(`SP.user_id = ${user_id}`)
       .getRawMany()
       .then((data) => {
         logger.info_obj("API: " + "/getSPByUserID", {
           message: "API Done",
           total: data.length,
-          value: id,
+          value: user_id,
           status: true,
         });
         res.send({ data, total: data.length, status: true });
@@ -357,7 +358,7 @@ StandardPartRouter.post("/getSPByUserID", async (req, res) => {
       .catch((e) => {
         logger.error_obj("API: " + "/getSPByUserID", {
           message: "API Error: " + e,
-          value: id,
+          value: user_id,
           status: false,
         });
         res.send({ message: e, status: false });
@@ -365,7 +366,7 @@ StandardPartRouter.post("/getSPByUserID", async (req, res) => {
   } catch (e) {
     logger.error_obj("API: " + "/getSPByUserID", {
       message: "API Failed: " + e,
-      value: id,
+      value: user_id,
       status: false,
     });
     res.send({ message: e, status: false });
@@ -432,18 +433,28 @@ StandardPartRouter.get("/getAllDeletedSP", async (_req, res) => {
 StandardPartRouter.post("/getOneSP", async (req, res) => {
   const { id } = req.body;
   try {
+    const std_part = await SPManager.findOne(StandardParts, { where : { id }})
+    const type_item = await SPManager.findOne(SP_TypeItems, { where : { type_item : std_part?.type_item }})
+
+    const type_res = await axios({
+      method : "post",
+      url : "http://localhost:4000/TypeItem/getOneTypeItem",
+      data : type_item
+    })
+
+    const cat_res = await axios({
+      method : "post",
+      url : "http://localhost:4000/Category/getOneCategory",
+      data : { id : std_part?.part_id }
+    })
+
     await SPManager.createQueryBuilder(StandardParts, "SP")
       .innerJoinAndSelect("SP.user", "U")
       .innerJoinAndSelect("SP.SPCategory", "C")
       .select(["SP.id AS id"])
-      .addSelect(["U.fullname AS fullname"])
-      .addSelect([
-        "C.description AS category_desc",
-        "C.category_type AS category_type",
-      ])
+      .addSelect(["U.fullname AS fullname", "U.id AS user_id"])
       .addSelect([
         "SP.erp_code AS erp_code",
-        "SP.type_item AS type_item",
         "SP.product_part_number AS product_part_number",
         "SP.greatech_drawing_naming AS greatech_drawing_naming",
         "SP.description AS description",
@@ -458,13 +469,21 @@ StandardPartRouter.post("/getOneSP", async (req, res) => {
         "SP.remark AS remark",
         "SP.assign_material AS assign_material",
         "SP.assign_weight AS assign_weight",
-        "SP.vendor AS vendor",
         "SP.section AS section",
       ])
+      .addSelect(
+        `CASE WHEN SP.vendor = 'LV' then 'Local Vendor' 
+              WHEN SP.status = 'AV' then 'Appointed Vendor'
+              else ''
+        END`,
+        "vendor"
+      )
       .where("SP.status = 1")
       .andWhere(`SP.id = ${id}`)
-      .getRawMany()
+      .getRawOne()
       .then((data) => {
+        data.type_item = type_res.data.data
+        data.category = cat_res.data.data
         logger.info_obj("API: " + "/getOneSP", {
           message: "API Done",
           total: data.length,
@@ -499,8 +518,8 @@ StandardPartRouter.post("/addSP", async (req, res) => {
     var finalERP: any;
 
     const currentDatetime = moment().format();
-    const part_id = data.category.id;
-    const section = data.section;
+    const part_id = data.category.Category_id;
+    const section = data.category.Category_category_type;
     const vendor = data.vendor;
     const ppn = data.product_part_number;
     const u_id = data.user_id;
@@ -524,13 +543,14 @@ StandardPartRouter.post("/addSP", async (req, res) => {
       order: { id: "DESC" },
     });
 
+    var vdr: string = "";
     let getNumber: string = "0";
-    if (section == "M") {
+    if (section == "Mechanical") {
       if (lastData === undefined) {
         getNumber = (parseInt("00000000") + 1).toString().padStart(8, "0");
       } else {
         if (initial == "M0J") {
-          if (vendor == "LV") {
+          if (vendor == "Local Vendor") {
             const vendorLVData = await SPManager.query(
               `SELECT * FROM standard_parts WHERE erp_code LIKE '%M0J%' AND CONVERT(RIGHT(erp_code, 8), SIGNED) 
                             BETWEEN 1 AND 09999 ORDER BY RIGHT(erp_code, 8) DESC LIMIT 1`
@@ -538,7 +558,8 @@ StandardPartRouter.post("/addSP", async (req, res) => {
             const [_letterHalf, numberHalf] =
               vendorLVData[0].erp_code.split("-");
             getNumber = (parseInt(numberHalf) + 1).toString().padStart(8, "0");
-          } else if (vendor == "AV") {
+            vdr = "LV";
+          } else if (vendor == "Appointed Vendor") {
             const vendorAVData = await SPManager.query(
               `SELECT * FROM standard_parts WHERE erp_code LIKE '%M0J%' AND 
                             CONVERT(RIGHT(erp_code, 8), SIGNED) ORDER BY RIGHT(erp_code, 8) DESC LIMIT 1`
@@ -546,6 +567,7 @@ StandardPartRouter.post("/addSP", async (req, res) => {
             const [_letterHalf, numberHalf] =
               vendorAVData[0].erp_code.split("-");
             getNumber = (parseInt(numberHalf) + 1).toString().padStart(8, "0");
+            vdr = "AV";
           } else {
             logger.error_obj("API: " + "/addSP", {
               message:
@@ -566,7 +588,7 @@ StandardPartRouter.post("/addSP", async (req, res) => {
       finalERP = initial + "-" + getNumber;
     }
 
-    if (section == "S" || section == "V" || section == "E") {
+    if (section == "Software" || section == "Vision" || section == "Electrical") {
       if (lastData === undefined) {
         getNumber = (parseInt("000000") + 1).toString().padStart(6, "0");
       } else {
@@ -580,7 +602,7 @@ StandardPartRouter.post("/addSP", async (req, res) => {
       user_id: data.user_id,
       part_id: part_id,
       erp_code: finalERP,
-      type_item: data.type_item,
+      type_item: data.type_item.TypeItems_type_item,
       product_part_number: data.product_part_number,
       greatech_drawing_naming: data.greatech_drawing_naming,
       description: data.description,
@@ -591,11 +613,10 @@ StandardPartRouter.post("/addSP", async (req, res) => {
       _3d_folder: data._3d_folder,
       solidworks_folder: data.solidworks_folder,
       insert_date: currentDatetime,
-      update_date: "",
       remark: data.remark,
       assign_material: data.assign_material,
       assign_weight: data.assign_weight,
-      vendor: data.vendor,
+      vendor: vdr,
       status: 1,
       section: section,
     };
@@ -613,7 +634,7 @@ StandardPartRouter.post("/addSP", async (req, res) => {
         brand: data.brand,
       },
     });
-    console.log(checkRedundantPending, checkRedundantStdParts);
+
     if (
       checkRedundantPending !== undefined ||
       checkRedundantStdParts !== undefined
@@ -671,10 +692,11 @@ StandardPartRouter.post("/addSP", async (req, res) => {
 
 // ONLY FOR M0P - Customize Standard Parts
 StandardPartRouter.post("/addSPMS", async (req, res) => {
-  const { data } = req.body;
+  const data = req.body;
+
   try {
     const currentDatetime = moment().format();
-    const part_desc = data.sp_category;
+    const part_desc = data.category.Category_id;
     const subs = data.subs;
     const ppn = data.product_part_number;
     const u_id = data.user_id;
@@ -698,7 +720,7 @@ StandardPartRouter.post("/addSPMS", async (req, res) => {
       user_id: data.user_id,
       part_id: part_id,
       erp_code: finalERP,
-      type_item: data.type_item,
+      type_item: data.type_item.TypeItems_type_item,
       product_part_number: data.product_part_number,
       greatech_drawing_naming: data.greatech_drawing_naming,
       description: data.description,
@@ -709,13 +731,12 @@ StandardPartRouter.post("/addSPMS", async (req, res) => {
       _3d_folder: data._3d_folder,
       solidworks_folder: data.solidworks_folder,
       insert_date: currentDatetime,
-      update_date: "",
       remark: data.remark,
       assign_material: data.assign_material,
       assign_weight: data.assign_weight,
       vendor: data.vendor,
       status: 1,
-      section: data.section,
+      section: data.category.Category_category_type,
     };
 
     const checkRedundantPending = await SPManager.findOne(PendingParts, {
@@ -771,10 +792,9 @@ StandardPartRouter.post("/addSPMS", async (req, res) => {
         greatech_drawing_naming: element.greatech_drawing_naming,
         brand: element.brand,
         description: element.description,
-        type_item: element.type_item,
+        type_item: element.type_item.TypeItems_type_item,
         uom: element.uom,
         insert_date: currentDatetime,
-        update_date: "",
         remark: element.remark,
         folder_location: data.folder_location,
         _2d_folder: data._2d_folder,
@@ -784,7 +804,7 @@ StandardPartRouter.post("/addSPMS", async (req, res) => {
         assign_weight: element.assign_weight,
         vendor: "",
         status: 1,
-        section: data.section,
+        section: data.category.Category_category_type,
       };
 
       const subCheckRedundantPending = await SPManager.findOne(PendingParts, {
@@ -860,16 +880,366 @@ StandardPartRouter.post("/addSPMS", async (req, res) => {
   }
 });
 
+// ADD DATA FOR PENDING ONLY
+StandardPartRouter.post("/addPendingSP", async (req, res) => {
+  const { data } = req.body;
+  console.log(data);
+  try {
+    var finalERP: any;
+
+    const currentDatetime = moment().format();
+    const part_id = data.part_id;
+    const section = data.section;
+    const vendor = data.vendor;
+    const ppn = data.product_part_number;
+    const u_id = data.user_id;
+
+    const code = await SPManager.findOne(SP_Category, { id: part_id });
+    const initial = code?.code;
+
+    if (initial === undefined) {
+      logger.error_obj("API: " + "/addSP", {
+        message: "API Error: " + `Unable to find code ${part_id}.`,
+        status: false,
+      });
+      return res.send({
+        message: `Unable to find code ${part_id}.`,
+        status: false,
+      });
+    }
+
+    const lastData = await SPManager.findOne(StandardParts, {
+      where: { part_id },
+      order: { id: "DESC" },
+    });
+
+    var vdr: string = "";
+    let getNumber: string = "0";
+    if (section == "Mechanical") {
+      if (lastData === undefined) {
+        getNumber = (parseInt("00000000") + 1).toString().padStart(8, "0");
+      } else {
+        if (initial == "M0J") {
+          if (vendor == "Local Vendor") {
+            const vendorLVData = await SPManager.query(
+              `SELECT * FROM standard_parts WHERE erp_code LIKE '%M0J%' AND CONVERT(RIGHT(erp_code, 8), SIGNED) 
+                            BETWEEN 1 AND 09999 ORDER BY RIGHT(erp_code, 8) DESC LIMIT 1`
+            );
+            const [_letterHalf, numberHalf] =
+              vendorLVData[0].erp_code.split("-");
+            getNumber = (parseInt(numberHalf) + 1).toString().padStart(8, "0");
+            vdr = "LV";
+          } else if (vendor == "Appointed Vendor") {
+            const vendorAVData = await SPManager.query(
+              `SELECT * FROM standard_parts WHERE erp_code LIKE '%M0J%' AND 
+                            CONVERT(RIGHT(erp_code, 8), SIGNED) ORDER BY RIGHT(erp_code, 8) DESC LIMIT 1`
+            );
+            const [_letterHalf, numberHalf] =
+              vendorAVData[0].erp_code.split("-");
+            getNumber = (parseInt(numberHalf) + 1).toString().padStart(8, "0");
+            vdr = "AV";
+          } else {
+            logger.error_obj("API: " + "/addSP", {
+              message:
+                "API Error: " +
+                `Invalid Vendor Code [${vendor}]. Unable to find it.`,
+              status: false,
+            });
+            return res.send({
+              message: `Invalid Vendor Code [${vendor}]. Unable to find it.`,
+              status: false,
+            });
+          }
+        } else {
+          const [_letterHalf, numberHalf] = lastData.erp_code.split("-");
+          getNumber = (parseInt(numberHalf) + 1).toString().padStart(8, "0");
+        }
+      }
+      finalERP = initial + "-" + getNumber;
+    }
+
+    if (section == "Software" || section == "Vision" || section == "Electrical") {
+      if (lastData === undefined) {
+        getNumber = (parseInt("000000") + 1).toString().padStart(6, "0");
+      } else {
+        const [_letterHalf, numberHalf] = lastData.erp_code.split("-");
+        getNumber = (parseInt(numberHalf) + 1).toString().padStart(6, "0");
+      }
+      finalERP = initial + "-" + getNumber;
+    }
+
+    const mainResult = {
+      user_id: data.user_id,
+      part_id: part_id,
+      erp_code: finalERP,
+      type_item: data.type_item,
+      product_part_number: data.product_part_number,
+      greatech_drawing_naming: data.greatech_drawing_naming,
+      description: data.description,
+      brand: data.brand,
+      uom: data.uom,
+      folder_location: data.folder_location,
+      _2d_folder: data._2d_folder,
+      _3d_folder: data._3d_folder,
+      solidworks_folder: data.solidworks_folder,
+      insert_date: currentDatetime,
+      update_date: "",
+      remark: data.remark,
+      assign_material: data.assign_material,
+      assign_weight: data.assign_weight,
+      vendor: data.vendor,
+      status: 1,
+      section: section,
+    };
+
+    const checkRedundantStdParts = await SPManager.findOne(StandardParts, {
+      where: {
+        product_part_number: data.product_part_number,
+        brand: data.brand,
+      },
+    });
+
+    if (
+      checkRedundantStdParts !== undefined
+    ) {
+      logger.error_obj("API: " + "/addSP", {
+        message:
+          "API Error: " +
+          `Redundant on ProductPartNumber ${data.product_part_number} and Brand ${data.brand}.`,
+        status: false,
+      });
+      return res.send({
+        message: `Redundant on ProductPartNumber ${data.product_part_number} and Brand ${data.brand}`,
+        status: false,
+      });
+    }
+
+    await SPManager.insert(StandardParts, mainResult)
+      .then((data) => {
+        logger.info_obj("API: " + "/addSP", {
+          message: "API Done",
+          main: { erp_code: finalERP, part_number: ppn },
+          status: true,
+        });
+        updateActivityLog(
+          currentDatetime,
+          finalERP,
+          u_id,
+          "/addSP",
+          "CREATE",
+          "Created New Standard Parts"
+        );
+        res.send({
+          data: `Insert Successfully`,
+          main: { erp_code: finalERP, part_number: ppn },
+          status: true,
+        });
+      })
+      .catch((e) => {
+        logger.error_obj("API: " + "/addSP", {
+          message: "API Error" + e,
+          value: data,
+          status: false,
+        });
+        res.send({ data: `Error On Insert To DB: ` + e, status: false });
+      });
+  } catch (e) {
+    logger.error_obj("API: " + "/addSP", {
+      message: "API Failed: " + e,
+      value: data,
+      status: false,
+    });
+    res.send({ message: e, status: false });
+  }
+});
+
+// ONLY FOR M0P - Customize Standard Parts
+StandardPartRouter.post("/addPendingSPMS", async (req, res) => {
+  const { data } = req.body;
+  try {
+    const currentDatetime = moment().format();
+    const part_desc = data.category_id;
+    const subs = data.subs;
+    const ppn = data.product_part_number;
+    const u_id = data.user_id;
+
+    const code = await SPManager.findOne(SP_Category, { id: part_desc });
+    const initial = code?.code;
+    const part_id = code?.id;
+
+    const lastData = await SPManager.findOne(StandardParts, {
+      where: { part_id },
+      order: { id: "DESC" },
+    });
+
+    const [_letterHalf, numberHalf] = lastData!.erp_code.split("-");
+    const newNumberHalf = (parseInt(numberHalf) + 1)
+      .toString()
+      .padStart(8, "0");
+    const finalERP = initial + "-" + newNumberHalf;
+
+    const mainResult = {
+      user_id: data.user_id,
+      part_id: part_id,
+      erp_code: finalERP,
+      type_item: data.type_item,
+      product_part_number: data.product_part_number,
+      greatech_drawing_naming: data.greatech_drawing_naming,
+      description: data.description,
+      brand: data.brand,
+      uom: data.uom,
+      folder_location: data.folder_location,
+      _2d_folder: data._2d_folder,
+      _3d_folder: data._3d_folder,
+      solidworks_folder: data.solidworks_folder,
+      insert_date: currentDatetime,
+      update_date: "",
+      remark: data.remark,
+      assign_material: data.assign_material,
+      assign_weight: data.assign_weight,
+      vendor: data.vendor,
+      status: 1,
+      section: data.section,
+    };
+
+    const checkRedundantStdParts = await SPManager.findOne(StandardParts, {
+      where: {
+        product_part_number: data.product_part_number,
+        brand: data.brand,
+      },
+    });
+
+    if (
+      checkRedundantStdParts !== undefined
+    ) {
+      logger.error_obj("API: " + "/addPendingSPMS", {
+        message:
+          "API Error: " +
+          `Redundant on ProductPartNumber ${data.product_part_number} and Brand ${data.brand}.`,
+        status: false,
+      });
+      return res.send({
+        message: `Redundant on ProductPartNumber ${data.product_part_number} and Brand ${data.brand}`,
+        status: false,
+      });
+    }
+
+    var all_sub = [];
+    var erp_part: any[] = [];
+
+    for (let [index, element] of subs.entries()) {
+      index++;
+      const newNumberHalf = (parseInt("00") + index)
+        .toString()
+        .padStart(2, "0");
+      const result = [finalERP, newNumberHalf].join(".");
+
+      var get_value = {
+        erp_code: result,
+        part_number: element.product_part_number,
+      };
+
+      var sub_temp = {
+        erp_code: result,
+        product_part_number: element.product_part_number,
+        user_id: data.user_id,
+        part_id: part_id,
+        greatech_drawing_naming: element.greatech_drawing_naming,
+        brand: element.brand,
+        description: element.description,
+        type_item: element.type_item,
+        uom: element.uom,
+        insert_date: currentDatetime,
+        update_date: "",
+        remark: element.remark,
+        folder_location: data.folder_location,
+        _2d_folder: data._2d_folder,
+        _3d_folder: data._3d_folder,
+        solidworks_folder: data.solidworks_folder,
+        assign_material: element.assign_material,
+        assign_weight: element.assign_weight,
+        vendor: "",
+        status: 1,
+        section: data.section,
+      };
+
+      const subCheckRedundantStdParts = await SPManager.findOne(StandardParts, {
+        where: {
+          product_part_number: element.product_part_number,
+          brand: element.brand,
+        },
+      });
+
+      if (
+        subCheckRedundantStdParts !== undefined
+      ) {
+        logger.error_obj("API: " + "/addPendingSPMS", {
+          message:
+            "API Error: " +
+            `Redundant on ProductPartNumber ${data.product_part_number} and Brand ${data.brand}.`,
+          status: false,
+        });
+        return res.send({
+          message: `Redundant on ProductPartNumber ${data.product_part_number} and Brand ${data.brand}`,
+          status: false,
+        });
+      }
+
+      all_sub.push(sub_temp);
+      erp_part.push(get_value);
+    }
+
+    await SPManager.insert(StandardParts, mainResult);
+    await SPManager.insert(StandardParts, all_sub)
+      .then((data) => {
+        logger.info_obj("API: " + "/addPendingSPMS", {
+          message: "API Done",
+          main: { erp_code: finalERP, part_number: ppn },
+          status: true,
+        });
+        updateActivityLog(
+          currentDatetime,
+          finalERP,
+          u_id,
+          "/addSPMS",
+          "CREATE",
+          "Created New MS Standard Parts"
+        );
+        res.send({
+          data: `Insert Successfully`,
+          main: { erp_code: finalERP, part_number: ppn },
+          status: true,
+        });
+      })
+      .catch((e) => {
+        logger.error_obj("API: " + "/addPendingSPMS", {
+          message: "API Error" + e,
+          value: data,
+          status: false,
+        });
+        res.send({ data: `Error On Insert To DB: ` + e, status: false });
+      });
+  } catch (e) {
+    logger.error_obj("API: " + "/addPendingSPMS", {
+      message: "API Failed: " + e,
+      value: data,
+      status: false,
+    });
+    res.send({ message: e, status: false });
+  }
+});
+
 // EDIT DATA ONLY
 StandardPartRouter.post("/editSP", async (req, res) => {
-  const { data } = req.body;
+  const data = req.body;
+  console.log(data)
   try {
     const currentDatetime = moment().format();
     const {
       id,
       product_part_number,
       user_id,
-      part_id,
+      category,
       greatech_drawing_naming,
       brand,
       description,
@@ -885,6 +1255,8 @@ StandardPartRouter.post("/editSP", async (req, res) => {
       vendor,
       section,
     } = data;
+
+    const part_id = category.Category_id;
 
     const subCheckRedundantPending = await SPManager.findOne(PendingParts, {
       where: {
@@ -903,16 +1275,18 @@ StandardPartRouter.post("/editSP", async (req, res) => {
       subCheckRedundantPending !== undefined ||
       subCheckRedundantStdParts !== undefined
     ) {
-      logger.error_obj("API: " + "/editSP", {
-        message:
-          "API Error: " +
-          `Redundant on ProductPartNumber ${data.product_part_number} and Brand ${data.brand}.`,
-        status: false,
-      });
-      return res.send({
-        message: `Redundant on ProductPartNumber ${data.product_part_number} and Brand ${data.brand}`,
-        status: false,
-      });
+      if (subCheckRedundantStdParts?.id != id) {
+        logger.error_obj("API: " + "/editSP", {
+          message:
+            "API Error: " +
+            `Redundant on ProductPartNumber ${data.product_part_number} and Brand ${data.brand}.`,
+          status: false,
+        });
+        return res.send({
+          message: `Redundant on ProductPartNumber ${data.product_part_number} and Brand ${data.brand}`,
+          status: false,
+        });
+      }
     }
 
     const fetchId = await SPManager.findOne(StandardParts, {
@@ -937,7 +1311,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
               greatech_drawing_naming,
               brand,
               description,
-              type_item,
+              type_item : type_item.TypeItems_type_item,
               uom,
               update_date: currentDatetime,
               remark,
@@ -949,13 +1323,13 @@ StandardPartRouter.post("/editSP", async (req, res) => {
               assign_weight,
               vendor,
               status: 1,
-              section: "M",
+              section: "Mechanical",
             }
           )
             .then((data) => {
               logger.info_obj("API: " + "/editSP", {
                 message: "API Done",
-                main: data,
+                main: {erp_code : f_erp_code},
                 status: true,
               });
               updateActivityLog(
@@ -968,7 +1342,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
               );
               res.send({
                 data: `Insert Successfully`,
-                main: data,
+                main: {erp_code : f_erp_code},
                 status: true,
               });
             })
@@ -1015,7 +1389,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
             });
           });
 
-          if (vendor == "LV") {
+          if (vendor == "Local Vendor") {
             const vendorLVData = await SPManager.query(
               `SELECT * FROM standard_parts WHERE erp_code LIKE '%M0J%' AND CONVERT(RIGHT(erp_code, 8), SIGNED) 
                             BETWEEN 1 AND 09999 ORDER BY RIGHT(erp_code, 8) DESC LIMIT 1`
@@ -1032,7 +1406,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
               user_id: user_id,
               part_id: part_id,
               erp_code: finalERP,
-              type_item: type_item,
+              type_item: type_item.TypeItems_type_item,
               product_part_number: product_part_number,
               greatech_drawing_naming: greatech_drawing_naming,
               description: description,
@@ -1049,7 +1423,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
               assign_weight: assign_weight,
               vendor: "LV",
               status: 1,
-              section: "M",
+              section: "Mechanical",
             };
 
             const subCheckRedundantPending = await SPManager.findOne(
@@ -1126,7 +1500,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
                 });
               });
           }
-          if (vendor == "AV") {
+          if (vendor == "Appointed Vendor") {
             const vendorAVData = await SPManager.query(
               `SELECT * FROM standard_parts WHERE erp_code LIKE '%M0J%' AND 
                             CONVERT(RIGHT(erp_code, 8), SIGNED) ORDER BY RIGHT(erp_code, 8) DESC LIMIT 1`
@@ -1143,7 +1517,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
               user_id: user_id,
               part_id: part_id,
               erp_code: finalERP,
-              type_item: type_item,
+              type_item: type_item.TypeItems_type_item,
               product_part_number: product_part_number,
               greatech_drawing_naming: greatech_drawing_naming,
               description: description,
@@ -1160,7 +1534,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
               assign_weight: assign_weight,
               vendor: "AV",
               status: 1,
-              section: "M",
+              section: "Mechanical",
             };
 
             const subCheckRedundantPending = await SPManager.findOne(
@@ -1248,7 +1622,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
             greatech_drawing_naming,
             brand,
             description,
-            type_item,
+            type_item : type_item.TypeItems_type_item,
             uom,
             remark,
             update_date: currentDatetime,
@@ -1260,7 +1634,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
             assign_weight,
             vendor,
             status: 1,
-            section: "M",
+            section: "Mechanical",
           }
         ).catch((e) => {
           logger.error_obj("API: " + "/editSP", {
@@ -1353,7 +1727,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
             greatech_drawing_naming,
             brand,
             description,
-            type_item,
+            type_item : type_item.TypeItems_type_item,
             uom,
             remark,
             update_date: currentDatetime,
@@ -1371,7 +1745,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
           .then((data) => {
             logger.info_obj("API: " + "/editSP", {
               message: "API Done",
-              main: data,
+              main: {erp_code : f_erp_code},
               status: true,
             });
             updateActivityLog(
@@ -1382,7 +1756,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
               "EDIT",
               "Edit Standard Parts"
             );
-            res.send({ data: `Insert Successfully`, main: data, status: true });
+            res.send({ data: `Insert Successfully`, main: {erp_code : f_erp_code}, status: true });
           })
           .catch((e) => {
             logger.error_obj("API: " + "/editSP", {
@@ -1394,7 +1768,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
           });
       }
     } else {
-      const code = await SP_Category.findOne({ where: { id: part_id } });
+      const code = await SPManager.findOne(SP_Category, { where: { id: part_id } });
       const initial = code?.code;
       const lastData = await SPManager.findOne(StandardParts, {
         where: { part_id },
@@ -1436,7 +1810,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
           status: false,
         });
       });
-      if (f_code == "M0J" && section == "M") {
+      if (f_code == "M0J" && section == "Mechanical") {
         if (vendor == "LV") {
           const vendorLVData = await SPManager.query(
             `SELECT * FROM standard_parts WHERE erp_code LIKE '%M0J%' AND CONVERT(RIGHT(erp_code, 8), SIGNED) 
@@ -1453,7 +1827,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
             user_id: user_id,
             part_id: part_id,
             erp_code: finalERP,
-            type_item: type_item,
+            type_item: type_item.TypeItems_type_item,
             product_part_number: product_part_number,
             greatech_drawing_naming: greatech_drawing_naming,
             description: description,
@@ -1551,7 +1925,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
             user_id: user_id,
             part_id: part_id,
             erp_code: finalERP,
-            type_item: type_item,
+            type_item: type_item.TypeItems_type_item,
             product_part_number: product_part_number,
             greatech_drawing_naming: greatech_drawing_naming,
             description: description,
@@ -1633,7 +2007,9 @@ StandardPartRouter.post("/editSP", async (req, res) => {
               res.send({ data: `Error On Insert To DB: ` + e, status: false });
             });
         }
-      } else if (f_code != "M0J" && section == "M") {
+      } 
+      else if (f_code != "M0J" && section == "Mechanical") {
+        console.log("OKO")
         if (lastData === undefined) {
           getNumber = (parseInt("00000000") + 1).toString().padStart(8, "0");
         }
@@ -1646,7 +2022,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
           user_id: user_id,
           part_id: part_id,
           erp_code: finalERP,
-          type_item: type_item,
+          type_item: type_item.TypeItems_type_item,
           product_part_number: product_part_number,
           greatech_drawing_naming: greatech_drawing_naming,
           description: description,
@@ -1737,7 +2113,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
           user_id: user_id,
           part_id: part_id,
           erp_code: finalERP,
-          type_item: type_item,
+          type_item: type_item.TypeItems_type_item,
           product_part_number: product_part_number,
           greatech_drawing_naming: greatech_drawing_naming,
           description: description,
@@ -1935,7 +2311,7 @@ StandardPartRouter.post("/switchSPUser", async (req, res) => {
   const { old_id, new_id, user_id } = req.body;
   try {
     const currentDatetime = moment().format();
-    const checkNewId = await SPManager.findOne(User, { id: new_id });
+    const checkNewId = await SPManager.findOne(User, { where : { id : new_id }});
     const getERPToChange = await SPManager.createQueryBuilder(
       StandardParts,
       "SP"
@@ -1976,9 +2352,9 @@ StandardPartRouter.post("/switchSPUser", async (req, res) => {
           user_id,
           "/switchSPUser",
           "EDIT",
-          "Edit User Standard Parts"
+          "Change Standard Parts of User"
         );
-        res.send({ data: `Insert Successfully`, main: data, status: true });
+        res.send({ data: `User Change Successfully`, main: data, status: true });
       })
       .catch((e) => {
         logger.error_obj("API: " + "/switchSPUser", {
@@ -2024,6 +2400,74 @@ StandardPartRouter.post("/countSPBySection", async (req, res) => {
     });
     res.send({ message: e, status: false });
   }
+});
+
+StandardPartRouter.post("/countSPByUserId", async (req, res) => {
+    const { user_id } = req.body;
+    try {
+        await SPManager.createQueryBuilder(StandardParts, "SP")
+        .select(["SP.id AS id"])
+        .where("SP.status = 1")
+        .andWhere(`SP.user_id = "${user_id}"`)
+        .getCount()
+        .then((data) => {
+            logger.info_obj("API: " + "/countSPByUserId", {
+            message: "API Done",
+            total: data,
+            value: user_id,
+            status: true,
+            });
+            res.send({ data, total: data, status: true });
+        })
+        .catch((e) => {
+            logger.error_obj("API: " + "/countSPByUserId", {
+            message: "API Error: " + e,
+            value: user_id,
+            status: false,
+            });
+            res.send({ message: e, status: false });
+        });
+    } catch (e) {
+        logger.error_obj("API: " + "/countSPByUserId", {
+        message: "API Failed: " + e,
+        value: user_id,
+        status: false,
+        });
+        res.send({ message: e, status: false });
+    }
+});
+  
+StandardPartRouter.get("/countAllSP", async (_req, res) => {
+    try {
+      await SPManager.createQueryBuilder(StandardParts, "SP")
+        .select(["SP.id AS id"])
+        .where("SP.status = 1")
+        .getCount()
+        .then((data) => {
+          logger.info_obj("API: " + "/countAllSP", {
+            message: "API Done",
+            total: data,
+            value: "",
+            status: true,
+          });
+          res.send({ data, total: data, status: true });
+        })
+        .catch((e) => {
+          logger.error_obj("API: " + "/countAllSP", {
+            message: "API Error: " + e,
+            value: "",
+            status: false,
+          });
+          res.send({ message: e, status: false });
+        });
+    } catch (e) {
+      logger.error_obj("API: " + "/countAllSP", {
+        message: "API Failed: " + e,
+        value: "",
+        status: false,
+      });
+      res.send({ message: e, status: false });
+    }
 });
 
 module.exports = StandardPartRouter;

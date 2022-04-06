@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: "Vision_ERP",
+      name: "Greatech_ERP.S",
       script: "src/index.ts",
       watch: true,
       ignore_watch: ["Example.xlsx"],

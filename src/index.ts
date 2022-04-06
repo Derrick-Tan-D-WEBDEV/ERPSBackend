@@ -39,6 +39,9 @@ const main = async () => {
   app.use("/FormSettings", require("./routes/formsettings"));
   app.use("/Annoucement", require("./routes/news"));
   app.use("/Pending", require("./routes/pending"));
+  app.use("/Other", require("./routes/other"));
+  app.use("/Activity", require("./routes/activity"));
+  app.use("/DMT", require("./routes/dmt"));
 
   app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
