@@ -1844,7 +1844,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
             assign_weight: assign_weight,
             vendor: "LV",
             status: 1,
-            section: "M",
+            section: "Mechanical",
           };
 
           const checkRedundantPending = await SPManager.findOne(PendingParts, {
@@ -1942,7 +1942,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
             assign_weight: assign_weight,
             vendor: "AV",
             status: 1,
-            section: "M",
+            section: "Mechanical",
           };
 
           const checkRedundantPending = await SPManager.findOne(PendingParts, {
@@ -2100,7 +2100,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
             });
             res.send({ data: `Error On Insert To DB: ` + e, status: false });
           });
-      } else if (section == "V" || section == "S" || section == "E") {
+      } else if (section == "Vision" || section == "Software" || section == "Electrical") {
         if (lastData === undefined) {
           getNumber = (parseInt("000000") + 1).toString().padStart(6, "0");
         }

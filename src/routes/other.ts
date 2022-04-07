@@ -1,5 +1,4 @@
 import e, { Router } from "express";
-import moment from "moment";
 import { SP_Category } from "../entity/SP_Category";
 import { getConnection, getManager, Like } from "typeorm";
 import { StandardParts } from "../entity/SP";
@@ -8,7 +7,6 @@ import { LoggerService } from "../LoggerService";
 import { PendingParts } from "../entity/SP_Pending";
 import { ActivityLog } from "../entity/ActivityLog";
 import { User } from "../entity/User";
-import argon2 from "argon2";
 import { SP_UomTypes } from "../entity/SP_Uom";
 
 const logger = new LoggerService("other-api");
@@ -333,6 +331,15 @@ OtherRouter.get("/genSoftwareExcel", async (_req, res) => {
             status: false,
         });
         res.send({ message: e, status: false });
+    }
+})
+
+OtherRouter.get("/getAllExcel", async (_req, res) => {
+    try {
+
+    }
+    catch(e) {
+        
     }
 })
 
