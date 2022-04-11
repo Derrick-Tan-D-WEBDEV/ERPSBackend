@@ -336,10 +336,85 @@ OtherRouter.get("/genSoftwareExcel", async (_req, res) => {
 
 OtherRouter.get("/getAllExcel", async (_req, res) => {
     try {
+        const code = await OtherManager.find(SP_Category);
+        var wb = xlsx.utils.book_new();
 
+        for (var i = 0; i < code.length; i++) {
+            var worksheet = await OtherManager.findOne(SP_Category, { code : code[i]?.code })
+            var worksheetcode = worksheet?.code
+            var worksheetname = worksheet?.description
+
+            var data = await OtherManager.createQueryBuilder(StandardParts, "SP")
+                                         .innerJoinAndSelect("SP.user", "U")
+                                         .innerJoinAndSelect("SP.SPCategory", "C")
+                                         .select([
+                                             "SP.erp_code AS erp_code",
+                                             "SP.type_item AS type_item",
+                                             "SP.product_part_number AS product_part_number",
+                                             "SP.greatech_drawing_naming AS greatech_drawing_naming",
+                                             "SP.description AS description",
+                                             "SP.brand AS brand",
+                                             "SP.uom AS uom",
+                                             "SP.folder_location AS folder_location",
+                                             "SP._2d_folder AS _2d_folder",
+                                             "SP._3d_folder AS _3d_folder",
+                                             "SP.solidwork_folder AS solidwork_folder",
+                                         ])
+                                         .addSelect(
+                                            "CASE WHEN SP.update_date = '0000-00-00 00:00:00' THEN SP.insert_date ELSE SP.update_date END",
+                                            "update_date"
+                                         )
+                                         .addSelect([
+                                             "SP.remark AS remark",
+                                             "SP.assign_material AS assign_material",
+                                             "SP.assign_weight AS assign_weight",
+                                             "SP.vendor AS vendor",
+                                         ])
+                                         .addSelect("C.description AS category")
+                                         .addSelect("U.name AS update_by")
+                                         .where("SP.status = 1")
+                                         .andWhere(`SP.erp_code LIKE "%${ worksheetcode }%"`)
+                                         .getRawMany()
+18
+            if (data.length != 0) {
+                var ws = xlsx.utils.json_to_sheet(data);
+                ws.A1.v = 'ERP Number';
+                ws.B1.v = 'Type Item';
+                ws.C1.v = 'Product Part Number';
+                ws.D1.v = 'Greatech Drawing Naming';
+                ws.E1.v = 'Description';
+                ws.F1.v = 'Brand';
+                ws.G1.v = 'UOM'; 
+                ws.H1.v = 'Folder Location';
+                ws.I1.v = '2D Folder Location';
+                ws.J1.v = '3D Folder Location';
+                ws.K1.v = 'Solidwork Location';
+                ws.L1.v = 'Update Date';
+                ws.M1.v = 'Remark';
+                ws.N1.v = 'Assign Material';
+                ws.O1.v = 'Assign Weight';
+                ws.P1.v = 'Vendor';
+                ws.Q1.v = 'Category';
+                ws.R1.v = 'Update By';
+                xlsx.utils.book_append_sheet(wb, ws, worksheetcode);
+            }
+            else {
+                continue
+            }
+        }
+        xlsx.writeFile(wb, 'DomainStandardPart.xlsx');
+        logger.info_obj("API: " + "/getAllExcel", {
+            message: "API Done",
+            status: true,
+        });
+        res.download('./DomainStandardPart.xlsx', 'DomainStandardPart.xlsx')
     }
     catch(e) {
-        
+        logger.error_obj("API: " + "/getAllExcel", {
+            message: "API Failed: " + e,
+            status: false,
+        });
+        res.send({ message: e, status: false });
     }
 })
 
