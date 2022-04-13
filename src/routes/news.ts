@@ -23,7 +23,7 @@ SPNewsRouter.get("/getAllNewss", async (_req, res) => {
   try {
     await NewsManager.createQueryBuilder(NewsAnnouncement, "News")
       .innerJoinAndSelect("News.user", "U")
-      .select(["News.id", "News.title", "News.content", "News.datetime", "News.user_id"])
+      .select(["News.id", "News.title", "News.content", "News.datetime"])
       .addSelect(["U.name AS name"])
       .addSelect(
         "CASE WHEN News.status = 1 then 'Show' else 'Hide' end",
@@ -58,18 +58,13 @@ SPNewsRouter.get("/getAllNews", async (_req, res) => {
   try {
     await NewsManager.createQueryBuilder(NewsAnnouncement, "News")
       .innerJoinAndSelect("News.user", "U")
-      .select([
-        "News.id",
-        "News.category_type",
-        "News.description",
-        "News.code",
-      ])
+      .select(["News.id", "News.title", "News.content", "News.datetime"])
       .addSelect(["U.name AS name"])
       .addSelect(
         "CASE WHEN News.status = 1 then 'Show' else 'Hide' end",
         "status"
       )
-      .where("status = 1")
+      .where("News.status = 1")
       .getRawMany()
       .then((data) => {
         logger.info_obj("API: " + "/getAllNews", {
@@ -112,7 +107,7 @@ SPNewsRouter.post("/getOneNews", async (req, res) => {
         "CASE WHEN News.status = 1 then 'Show' else 'Hide' end",
         "status"
       )
-      .where(`id = ${id}`)
+      .where(`News.id = ${id}`)
       .getRawOne()
       .then((data) => {
         logger.info_obj("API: " + "/getOneNews", {
@@ -141,18 +136,19 @@ SPNewsRouter.post("/getOneNews", async (req, res) => {
 SPNewsRouter.get("/getLatestNews", async (_req, res) => {
   try {
     await NewsManager.createQueryBuilder(NewsAnnouncement, "News")
+    .innerJoinAndSelect("News.user", "U")
     .select([
       "News.id",
       "News.title",
       "News.content",
-      "News.datetime",
-      "News.user_id"
+      "News.datetime"
     ])
+    .addSelect(["U.name AS name"])
     .addSelect(
       "CASE WHEN News.status = 1 then 'Show' else 'Hide' end",
       "status"
     )
-    .where(`status = 1`)
+    .where(`News.status = 1`)
     .orderBy("News.id", "DESC")
     .limit(3)
     .getRawMany()
