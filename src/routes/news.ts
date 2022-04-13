@@ -22,7 +22,7 @@ SPNewsRouter.get("/", async (_req, res) => {
 SPNewsRouter.get("/getAllNewss", async (_req, res) => {
   try {
     await NewsManager.createQueryBuilder(NewsAnnouncement, "News")
-      .select(["News.id", "News.title", "News.content", "News.datetime"])
+      .select(["News.id", "News.title", "News.content", "News.datetime", "News.user_id"])
       .addSelect(
         "CASE WHEN News.status = 1 then 'Show' else 'Hide' end",
         "status"
@@ -132,6 +132,49 @@ SPNewsRouter.post("/getOneNews", async (req, res) => {
     res.send({ message: e, status: false });
   }
 });
+
+SPNewsRouter.get("/getLatestNews", async (_req, res) => {
+  try {
+    await NewsManager.createQueryBuilder(NewsAnnouncement, "News")
+    .select([
+      "News.id",
+      "News.title",
+      "News.content",
+      "News.datetime",
+      "News.user_id"
+    ])
+    .addSelect(
+      "CASE WHEN News.status = 1 then 'Show' else 'Hide' end",
+      "status"
+    )
+    .where(`status = 1`)
+    .orderBy("News.id", "DESC")
+    .limit(3)
+    .getRawMany()
+    .then((data) => {
+      logger.info_obj("API: " + "/getLatestNews", {
+        message: "API Done",
+        total: data.length,
+        status: true,
+      });
+      res.send({ data, total: data.length, status: true });
+    })
+    .catch((e) => {
+      logger.error_obj("API: " + "/getLatestNews", {
+        message: "API Error: " + e,
+        status: false,
+      });
+      res.send({ message: e, status: false });
+    })
+  }
+  catch(e) {
+    logger.error_obj("API: " + "/getLatestNews", {
+      message: "API Failed: " + e,
+      status: false,
+    });
+    res.send({ message: e, status: false });
+  }
+})
 
 SPNewsRouter.post("/addNews", async (req, res) => {
   const { values } = req.body;
