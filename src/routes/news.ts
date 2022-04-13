@@ -22,7 +22,9 @@ SPNewsRouter.get("/", async (_req, res) => {
 SPNewsRouter.get("/getAllNewss", async (_req, res) => {
   try {
     await NewsManager.createQueryBuilder(NewsAnnouncement, "News")
+      .innerJoinAndSelect("News.user", "U")
       .select(["News.id", "News.title", "News.content", "News.datetime", "News.user_id"])
+      .addSelect(["U.name AS name"])
       .addSelect(
         "CASE WHEN News.status = 1 then 'Show' else 'Hide' end",
         "status"
@@ -55,12 +57,14 @@ SPNewsRouter.get("/getAllNewss", async (_req, res) => {
 SPNewsRouter.get("/getAllNews", async (_req, res) => {
   try {
     await NewsManager.createQueryBuilder(NewsAnnouncement, "News")
+      .innerJoinAndSelect("News.user", "U")
       .select([
         "News.id",
         "News.category_type",
         "News.description",
         "News.code",
       ])
+      .addSelect(["U.name AS name"])
       .addSelect(
         "CASE WHEN News.status = 1 then 'Show' else 'Hide' end",
         "status"
@@ -96,13 +100,14 @@ SPNewsRouter.post("/getOneNews", async (req, res) => {
 
   try {
     await NewsManager.createQueryBuilder(NewsAnnouncement, "News")
+      .innerJoinAndSelect("News.user", "U")
       .select([
         "News.id",
         "News.title",
         "News.content",
         "News.datetime",
-        "News.user_id"
       ])
+      .addSelect(["U.name AS name"])
       .addSelect(
         "CASE WHEN News.status = 1 then 'Show' else 'Hide' end",
         "status"
