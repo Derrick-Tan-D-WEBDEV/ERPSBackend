@@ -143,12 +143,12 @@ SPNewsRouter.post("/addNews", async (req, res) => {
       logger.error_obj("API: " + "/addNews", {
         message:
           "API Error: " +
-          `Redundant on News ${values.category_type} - ${values.description} (${values.code}).`,
+          `Redundant on News ${values.title} - ${values.content} (${values.datetime}).`,
         value: values.uom,
         status: false,
       });
       return res.send({
-        message: `Redundant on News ${values.category_type} - ${values.description} (${values.code}).`,
+        message: `Redundant on News ${values.title} - ${values.content} (${values.datetime}).`,
         status: false,
       });
     }
