@@ -1232,7 +1232,7 @@ StandardPartRouter.post("/addPendingSPMS", async (req, res) => {
 // EDIT DATA ONLY
 StandardPartRouter.post("/editSP", async (req, res) => {
   const data = req.body;
-  console.log(data)
+
   try {
     const currentDatetime = moment().format();
     const {

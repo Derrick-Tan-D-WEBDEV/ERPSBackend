@@ -98,9 +98,10 @@ SPNewsRouter.post("/getOneNews", async (req, res) => {
     await NewsManager.createQueryBuilder(NewsAnnouncement, "News")
       .select([
         "News.id",
-        "News.category_type",
-        "News.description",
-        "News.code",
+        "News.title",
+        "News.content",
+        "News.datetime",
+        "News.user_id"
       ])
       .addSelect(
         "CASE WHEN News.status = 1 then 'Show' else 'Hide' end",
@@ -135,6 +136,8 @@ SPNewsRouter.post("/getOneNews", async (req, res) => {
 SPNewsRouter.post("/addNews", async (req, res) => {
   const { values } = req.body;
   try {
+    const currentDatetime = moment().format();
+
     const checkDuplicate = await NewsManager.findOne(NewsAnnouncement, {
       title: values.title,
     });
@@ -157,7 +160,7 @@ SPNewsRouter.post("/addNews", async (req, res) => {
       title: values.title,
       content: values.content,
       user_id: values.user_id,
-      datetime: Date.now(),
+      datetime: currentDatetime,
       status: 1,
     };
 
