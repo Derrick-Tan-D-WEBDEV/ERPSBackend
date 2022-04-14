@@ -236,6 +236,8 @@ SPNewsRouter.post("/addNews", async (req, res) => {
 SPNewsRouter.post("/editNews", async (req, res) => {
   const { id, values } = req.body;
   try {
+    const currentDatetime = moment().format();
+
     const checkDuplicate = await NewsManager.findOne(NewsAnnouncement, {
       title: values.title,
     });
@@ -258,10 +260,11 @@ SPNewsRouter.post("/editNews", async (req, res) => {
       NewsAnnouncement,
       { id },
       {
+        datetime: currentDatetime,
         title: values.title,
         content: values.content,
         user_id: values.user_id,
-        status: values.status
+        status: 1
       }
     )
       .then((data) => {
