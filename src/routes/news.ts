@@ -264,7 +264,7 @@ SPNewsRouter.post("/editNews", async (req, res) => {
         title: values.title,
         content: values.content,
         user_id: values.user_id,
-        status: values.status
+        status: values.status === "Show" ? 1 : 0
       }
     )
       .then((data) => {
