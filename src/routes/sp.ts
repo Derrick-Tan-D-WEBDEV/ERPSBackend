@@ -473,7 +473,7 @@ StandardPartRouter.post("/getOneSP", async (req, res) => {
       ])
       .addSelect(
         `CASE WHEN SP.vendor = 'LV' then 'Local Vendor' 
-              WHEN SP.status = 'AV' then 'Appointed Vendor'
+              WHEN SP.vendor = 'AV' then 'Appointed Vendor'
               else ''
         END`,
         "vendor"
