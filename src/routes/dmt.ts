@@ -24,7 +24,11 @@ DMTRouter.get("/", async (_req, res) => {
 DMTRouter.get("/getAllDMTs", async (_req, res) => {
     try {
         await DMTManager.createQueryBuilder(DMTParts, "DMT")
-                        .select(["DMT.id AS id", "DMT.partNum AS partNum", "DMT.status AS status"])
+                        .select(["DMT.id AS id", "DMT.partNum AS partNum"])
+                        .addSelect(
+                            "CASE WHEN DMT.status = 1 then 'Show' else 'Hide' end",
+                            "status"
+                        )
                         .getRawMany()
         .then((data) => {
             logger.info_obj("API: " + "/getAllDMTs", {
@@ -54,7 +58,11 @@ DMTRouter.get("/getAllDMTs", async (_req, res) => {
 DMTRouter.get("/getAllDMT", async (_req, res) => {
     try {
         await DMTManager.createQueryBuilder(DMTParts, "DMT")
-                        .select(["DMT.id AS id", "DMT.partNum AS partNum", "DMT.status AS status"])
+                        .select(["DMT.id AS id", "DMT.partNum AS partNum"])
+                        .addSelect(
+                            "CASE WHEN DMT.status = 1 then 'Show' else 'Hide' end",
+                            "status"
+                        )
                         .where("DMT.status = 1")
                         .getRawMany()
         .then((data) => {
@@ -86,7 +94,11 @@ DMTRouter.post("/getOneDMT", async (req, res) => {
     const { id } = req.body;
     try {
         await DMTManager.createQueryBuilder(DMTParts, "DMT")
-                        .select(["DMT.id AS id", "DMT.partNum AS partNum", "DMT.status AS status"])
+                        .select(["DMT.id AS id", "DMT.partNum AS partNum"])
+                        .addSelect(
+                            "CASE WHEN DMT.status = 1 then 'Show' else 'Hide' end",
+                            "status"
+                        )
                         .where("DMT.status = 1")
                         .andWhere(`DMT.id = ${ id }`)
                         .getRawOne()
@@ -118,7 +130,11 @@ DMTRouter.post("/getOneDMT", async (req, res) => {
 DMTRouter.post("/getDeletedDMT", async (_req, res) => {
     try {
         await DMTManager.createQueryBuilder(DMTParts, "DMT")
-                        .select(["DMT.id AS id", "DMT.partNum AS partNum", "DMT.status AS status"])
+                        .select(["DMT.id AS id", "DMT.partNum AS partNum"])
+                        .addSelect(
+                            "CASE WHEN DMT.status = 1 then 'Show' else 'Hide' end",
+                            "status"
+                        )
                         .where("DMT.status = 0")
                         .getRawMany()
         .then((data) => {
