@@ -150,17 +150,52 @@ IconRouter.post("/editUserIcon", async (req, res) => {
         const checkUser = await IconManager.findOne(UserIcon, { user_id })
 
         if (checkUser === undefined) {
-            logger.error_obj("API: " + "/editUserIcon", {
-                message:
-                  "API Error: " +
-                  `Employee ID ${user_id} Not Found.`,
-                value: user_id,
-                status: false,
-            });
-            return res.send({
-                message: `Employee ID ${user_id} Not Found.`,
-                status: false,
-            });
+            const mainResult = {
+                accessory,
+                body,
+                circleColor,
+                clothing,
+                clothingColor,
+                eyebrows,
+                eyes,
+                facialHair,
+                graphic,
+                hair,
+                hairColor,
+                hat,
+                hatColor,
+                lashes,
+                lipColor,
+                mask,
+                faceMask,
+                mouth,
+                skinTone,
+                faceMaskColor,
+                user_id,
+                status : 1
+            }
+    
+            await IconManager.insert(UserIcon, mainResult)
+            .then((data) => {
+                logger.info_obj("API: " + "/editUserIcon", {
+                    message: "API Done",
+                    main: data,
+                    status: true,
+                });
+                res.send({
+                    data: `Insert Successfully`,
+                    main: data,
+                    status: true,
+                });
+            })
+            .catch((e) => {
+                logger.error_obj("API: " + "/editUserIcon", {
+                    message: "API Error" + e,
+                    value: mainResult,
+                    status: false,
+                });
+                res.send({ data: `Error On Insert To DB: ` + e, status: false });
+            })
         }
 
         await IconManager.update(UserIcon, { user_id }, {
