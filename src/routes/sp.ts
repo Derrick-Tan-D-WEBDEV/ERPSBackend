@@ -92,6 +92,10 @@ StandardPartRouter.get("/getAllSP", async (_req, res) => {
         "SP.vendor AS vendor",
         "SP.section AS section",
       ])
+      .addSelect(
+        "CASE WHEN SP.status = 1 then 'Show' else 'Hide' end",
+        "status"
+      )
       .where("SP.status = 1")
       .getRawMany()
       .then((data) => {
@@ -150,6 +154,10 @@ StandardPartRouter.post("/getSPBySection", async (req, res) => {
         "SP.vendor AS vendor",
         "SP.section AS section",
       ])
+      .addSelect(
+        "CASE WHEN SP.status = 1 then 'Show' else 'Hide' end",
+        "status"
+      )
       .where("SP.status = 1")
       .andWhere(`SP.section = "${sect}"`)
       .getRawMany()
@@ -343,6 +351,10 @@ StandardPartRouter.post("/getSPByUserID", async (req, res) => {
         "SP.vendor AS vendor",
         "SP.section AS section",
       ])
+      .addSelect(
+        "CASE WHEN SP.status = 1 then 'Show' else 'Hide' end",
+        "status"
+      )
       .where("SP.status = 1")
       .andWhere(`SP.user_id = ${user_id}`)
       .getRawMany()
@@ -404,6 +416,10 @@ StandardPartRouter.get("/getAllDeletedSP", async (_req, res) => {
         "SP.vendor AS vendor",
         "SP.section AS section",
       ])
+      .addSelect(
+        "CASE WHEN SP.status = 1 then 'Show' else 'Hide' end",
+        "status"
+      )
       .where("SP.status = 0")
       .getRawMany()
       .then((data) => {
@@ -479,6 +495,10 @@ StandardPartRouter.post("/getOneSP", async (req, res) => {
               else ''
         END`,
         "vendor"
+      )
+      .addSelect(
+        "CASE WHEN SP.status = 1 then 'Show' else 'Hide' end",
+        "status"
       )
       .where("SP.status = 1")
       .andWhere(`SP.id = ${id}`)

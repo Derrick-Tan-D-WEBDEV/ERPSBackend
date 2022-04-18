@@ -85,7 +85,7 @@ OtherRouter.get("/genMechExcel", async (_req, res) => {
                                              "SP.assign_weight AS assign_weight"
                                          ])
                                          .addSelect(
-                                            "CASE WHEN SP.update_date = '0000-00-00 00:00:00' THEN SP.insert_date ELSE SP.update_date END",
+                                            "CASE WHEN SP.update_date IS NULL THEN SP.insert_date ELSE SP.update_date END",
                                             "update_date"
                                           )
                                           .addSelect("U.name AS name")
@@ -156,7 +156,7 @@ OtherRouter.get("/genVisionExcel", async (_req, res) => {
                                              "SP.solidworks_folder AS solidworks_folder", 
                                          ])
                                          .addSelect(
-                                            "CASE WHEN SP.update_date = '0000-00-00 00:00:00' THEN SP.insert_date ELSE SP.update_date END",
+                                            "CASE WHEN SP.update_date IS NULL THEN SP.insert_date ELSE SP.update_date END",
                                             "update_date"
                                          )
                                          .addSelect("SP.remark AS remark")
@@ -174,7 +174,7 @@ OtherRouter.get("/genVisionExcel", async (_req, res) => {
                 ws.E1.v = 'Greatech Naming Drawing';
                 ws.F1.v = 'Description';
                 ws.G1.v = 'Brand'; 
-                ws.H1.v = '2D Folder  Location';
+                ws.H1.v = '2D Folder Location';
                 ws.I1.v = '3D Folder Location';
                 ws.J1.v = 'SOLIDWORKS Folder Location';
                 ws.K1.v = 'Update Date';
@@ -226,7 +226,7 @@ OtherRouter.get("/genElectricalExcel", async (_req, res) => {
                                          ])
                                          .addSelect("U.name AS name")
                                          .addSelect(
-                                            "CASE WHEN SP.update_date = '0000-00-00 00:00:00' THEN SP.insert_date ELSE SP.update_date END",
+                                            "CASE WHEN SP.update_date IS NULL THEN SP.insert_date ELSE SP.update_date END",
                                             "update_date"
                                          )
                                          .addSelect("SP.remark AS remark")
@@ -288,11 +288,10 @@ OtherRouter.get("/genSoftwareExcel", async (_req, res) => {
                                              "SP.description AS description",
                                              "SP.brand AS brand",
                                              "SP.uom AS uom",
-                                             "SP._3d_folder AS _3d_folder",
                                          ])
                                          .addSelect("U.name AS name")
                                          .addSelect(
-                                            "CASE WHEN SP.update_date = '0000-00-00 00:00:00' THEN SP.insert_date ELSE SP.update_date END",
+                                            "CASE WHEN SP.update_date IS NULL THEN SP.insert_date ELSE SP.update_date END",
                                             "update_date"
                                          )
                                          .addSelect("SP.remark AS remark")
@@ -308,10 +307,9 @@ OtherRouter.get("/genSoftwareExcel", async (_req, res) => {
                 ws.D1.v = 'Description';
                 ws.E1.v = 'Brand';
                 ws.F1.v = 'UOM';
-                ws.G1.v = '3D Folder Location'; 
-                ws.H1.v = 'Update By';
-                ws.I1.v = 'Update Date';
-                ws.J1.v = 'Remark';
+                ws.G1.v = 'Update By';
+                ws.H1.v = 'Update Date';
+                ws.I1.v = 'Remark';
                 xlsx.utils.book_append_sheet(wb, ws, worksheetcode);
             }
             else {
@@ -361,7 +359,7 @@ OtherRouter.get("/getAllExcel", async (_req, res) => {
                                              "SP.solidwork_folder AS solidwork_folder",
                                          ])
                                          .addSelect(
-                                            "CASE WHEN SP.update_date = '0000-00-00 00:00:00' THEN SP.insert_date ELSE SP.update_date END",
+                                            "CASE WHEN SP.update_date IS NULL THEN SP.insert_date ELSE SP.update_date END",
                                             "update_date"
                                          )
                                          .addSelect([

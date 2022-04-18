@@ -6,3 +6,5 @@ Wed Apr 06 2022 10:15:18 GMT+0800 (Malaysia Time) | ERROR | other-api.log | API:
 Wed Apr 06 2022 10:15:49 GMT+0800 (Malaysia Time) | INFO | other-api.log | API: /genVisionExcel | data:{"message":"API Done","status":true} | 
 Wed Apr 06 2022 10:16:57 GMT+0800 (Malaysia Time) | INFO | other-api.log | API: /genElectricalExcel | data:{"message":"API Done","status":true} | 
 Wed Apr 06 2022 10:25:49 GMT+0800 (Malaysia Time) | INFO | other-api.log | API: /genSoftwareExcel | data:{"message":"API Done","status":true} | 
+Sat Apr 16 2022 13:40:43 GMT+0800 (Malaysia Time) | INFO | other-api.log | API: /genElectricalExcel | data:{"message":"API Done","status":true} | 
+Sat Apr 16 2022 13:44:38 GMT+0800 (Malaysia Time) | INFO | other-api.log | API: /genElectricalExcel | data:{"message":"API Done","status":true} | 
