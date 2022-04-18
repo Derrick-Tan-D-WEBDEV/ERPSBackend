@@ -747,3 +747,205 @@ Thu Mar 31 2022 15:14:03 GMT+0800 (Malaysia Time) | INFO | standardparts-api.log
 Thu Mar 31 2022 15:14:03 GMT+0800 (Malaysia Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 
 Thu Mar 31 2022 15:14:07 GMT+0800 (Malaysia Time) | INFO | standardparts-api.log | API: /countAllSP | data:{"message":"API Done","total":22443,"value":"","status":true} | 
 Thu Mar 31 2022 15:14:07 GMT+0800 (Malaysia Time) | INFO | standardparts-api.log | API: /countSPByUserId | data:{"message":"API Done","total":0,"value":"18","status":true} | 
+Sat Apr 16 2022 12:24:47 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":15443,"value":"Mechanical","status":true} | 
+Sat Apr 16 2022 12:24:48 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":6313,"value":"Electrical","status":true} | 
+Sat Apr 16 2022 12:24:48 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 
+Sat Apr 16 2022 12:24:48 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":648,"value":"Vision","status":true} | 
+Sat Apr 16 2022 12:24:53 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":6313,"value":"Electrical","status":true} | 
+Sat Apr 16 2022 12:24:53 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":15443,"value":"Mechanical","status":true} | 
+Sat Apr 16 2022 12:24:53 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":648,"value":"Vision","status":true} | 
+Sat Apr 16 2022 12:24:53 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 
+Sat Apr 16 2022 12:25:15 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPByUserId | data:{"message":"API Done","total":0,"value":"18","status":true} | 
+Sat Apr 16 2022 12:25:15 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countAllSP | data:{"message":"API Done","total":22422,"value":"","status":true} | 
+Sat Apr 16 2022 12:25:28 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":15443,"value":"Mechanical","status":true} | 
+Sat Apr 16 2022 12:25:28 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":648,"value":"Vision","status":true} | 
+Sat Apr 16 2022 12:25:29 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":6313,"value":"Electrical","status":true} | 
+Sat Apr 16 2022 12:25:29 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 
+Sat Apr 16 2022 12:25:43 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getSPByUserID | data:{"message":"API Done","total":0,"value":"18","status":true} | 
+Sat Apr 16 2022 12:25:47 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getSPByCategory | data:{"message":"API Done","total":1609,"value":1,"status":true} | 
+Sat Apr 16 2022 12:26:37 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":648,"value":"Vision","status":true} | 
+Sat Apr 16 2022 12:26:37 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":15443,"value":"Mechanical","status":true} | 
+Sat Apr 16 2022 12:26:37 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":6313,"value":"Electrical","status":true} | 
+Sat Apr 16 2022 12:26:37 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 
+Sat Apr 16 2022 12:27:30 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getSPByCategory | data:{"message":"API Done","total":1609,"value":1,"status":true} | 
+Sat Apr 16 2022 12:41:04 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getSPByCategory | data:{"message":"API Done","total":1609,"value":1,"status":true} | 
+Sat Apr 16 2022 12:41:25 GMT+0800 (China Standard Time) | ERROR | standardparts-api.log | API: /getOneSP | data:{"message":"API Error: TypeError: Cannot set property 'type_item' of undefined","value":"5","status":false} | 
+Sat Apr 16 2022 12:42:04 GMT+0800 (China Standard Time) | ERROR | standardparts-api.log | API: /getOneSP | data:{"message":"API Error: TypeError: Cannot set property 'type_item' of undefined","value":"5","status":false} | 
+Sat Apr 16 2022 12:42:14 GMT+0800 (China Standard Time) | ERROR | standardparts-api.log | API: /getOneSP | data:{"message":"API Error: TypeError: Cannot set property 'type_item' of undefined","value":"5","status":false} | 
+Sat Apr 16 2022 12:49:16 GMT+0800 (China Standard Time) | ERROR | standardparts-api.log | API: /getOneSP | data:{"message":"API Error: TypeError: Cannot set property 'type_item' of undefined","value":"5","status":false} | 
+Sat Apr 16 2022 12:49:25 GMT+0800 (China Standard Time) | ERROR | standardparts-api.log | API: /getOneSP | data:{"message":"API Error: TypeError: Cannot set property 'type_item' of undefined","value":"5","status":false} | 
+Sat Apr 16 2022 12:49:29 GMT+0800 (China Standard Time) | ERROR | standardparts-api.log | API: /getOneSP | data:{"message":"API Error: TypeError: Cannot set property 'type_item' of undefined","value":"5","status":false} | 
+Sat Apr 16 2022 12:49:37 GMT+0800 (China Standard Time) | ERROR | standardparts-api.log | API: /getOneSP | data:{"message":"API Error: TypeError: Cannot set property 'type_item' of undefined","value":"5","status":false} | 
+Sat Apr 16 2022 12:50:03 GMT+0800 (China Standard Time) | ERROR | standardparts-api.log | API: /getOneSP | data:{"message":"API Error: TypeError: Cannot set property 'type_item' of undefined","value":"5","status":false} | 
+Sat Apr 16 2022 12:52:05 GMT+0800 (China Standard Time) | ERROR | standardparts-api.log | API: /getOneSP | data:{"message":"API Error: TypeError: Cannot set property 'type_item' of undefined","value":"5","status":false} | 
+Sat Apr 16 2022 12:53:22 GMT+0800 (China Standard Time) | ERROR | standardparts-api.log | API: /getOneSP | data:{"message":"API Error: TypeError: Cannot set property 'type_item' of undefined","value":"5","status":false} | 
+Sat Apr 16 2022 12:53:40 GMT+0800 (China Standard Time) | ERROR | standardparts-api.log | API: /getOneSP | data:{"message":"API Error: TypeError: Cannot set property 'type_item' of undefined","value":"5","status":false} | 
+Sat Apr 16 2022 12:54:11 GMT+0800 (China Standard Time) | ERROR | standardparts-api.log | API: /getOneSP | data:{"message":"API Error: TypeError: Cannot set property 'type_item' of undefined","value":"5","status":false} | 
+Sat Apr 16 2022 12:54:57 GMT+0800 (China Standard Time) | ERROR | standardparts-api.log | API: /getOneSP | data:{"message":"API Error: TypeError: Cannot set property 'type_item' of undefined","value":"5","status":false} | 
+Sat Apr 16 2022 12:55:18 GMT+0800 (China Standard Time) | ERROR | standardparts-api.log | API: /getOneSP | data:{"message":"API Error: TypeError: Cannot set property 'type_item' of undefined","value":"1","status":false} | 
+Sat Apr 16 2022 12:55:37 GMT+0800 (China Standard Time) | ERROR | standardparts-api.log | API: /getOneSP | data:{"message":"API Error: TypeError: Cannot set property 'type_item' of undefined","value":"1","status":false} | 
+Sat Apr 16 2022 12:56:36 GMT+0800 (China Standard Time) | ERROR | standardparts-api.log | API: /getOneSP | data:{"message":"API Error: TypeError: Cannot set property 'type_item' of undefined","value":"1","status":false} | 
+Sat Apr 16 2022 12:58:50 GMT+0800 (China Standard Time) | ERROR | standardparts-api.log | API: /getOneSP | data:{"message":"API Error: TypeError: Cannot set property 'type_item' of undefined","value":"1","status":false} | 
+Sat Apr 16 2022 12:59:48 GMT+0800 (China Standard Time) | ERROR | standardparts-api.log | API: /getOneSP | data:{"message":"API Error: TypeError: Cannot set property 'type_item' of undefined","value":"1","status":false} | 
+Sat Apr 16 2022 13:00:17 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24315","status":true} | 
+Sat Apr 16 2022 13:00:56 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getSPByCategory | data:{"message":"API Done","total":1609,"value":1,"status":true} | 
+Sat Apr 16 2022 13:01:07 GMT+0800 (China Standard Time) | ERROR | standardparts-api.log | API: /getOneSP | data:{"message":"API Error: TypeError: Cannot set property 'type_item' of undefined","value":"5","status":false} | 
+Sat Apr 16 2022 13:01:14 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24315","status":true} | 
+Sat Apr 16 2022 13:02:02 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24315","status":true} | 
+Sat Apr 16 2022 13:02:11 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24315","status":true} | 
+Sat Apr 16 2022 13:02:44 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24315","status":true} | 
+Sat Apr 16 2022 13:02:47 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24315","status":true} | 
+Sat Apr 16 2022 13:02:49 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24315","status":true} | 
+Sat Apr 16 2022 13:03:02 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":15443,"value":"Mechanical","status":true} | 
+Sat Apr 16 2022 13:03:03 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":648,"value":"Vision","status":true} | 
+Sat Apr 16 2022 13:03:03 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":6313,"value":"Electrical","status":true} | 
+Sat Apr 16 2022 13:03:03 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 
+Sat Apr 16 2022 13:03:08 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getSPByCategory | data:{"message":"API Done","total":1609,"value":1,"status":true} | 
+Sat Apr 16 2022 13:03:39 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getSPByCategory | data:{"message":"API Done","total":1609,"value":1,"status":true} | 
+Sat Apr 16 2022 13:03:41 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getSPByCategory | data:{"message":"API Done","total":1609,"value":1,"status":true} | 
+Sat Apr 16 2022 13:03:42 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getSPByCategory | data:{"message":"API Done","total":1609,"value":1,"status":true} | 
+Sat Apr 16 2022 13:03:52 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getSPByCategory | data:{"message":"API Done","total":1609,"value":1,"status":true} | 
+Sat Apr 16 2022 13:04:19 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:04:28 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:04:36 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:04:40 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:04:43 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:04:52 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:05:00 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:05:14 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:15:49 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:16:08 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:16:20 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:16:30 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:16:34 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:16:49 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:17:10 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:17:23 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:17:28 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:17:43 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:17:59 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:18:05 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:18:48 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:19:19 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:19:31 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:19:44 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:20:05 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:20:09 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:20:18 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:20:41 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:20:49 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:20:56 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:21:00 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:21:15 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:21:34 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:21:42 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:22:26 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:23:00 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:23:47 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:24:23 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:24:33 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:24:43 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:24:53 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:25:10 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:25:16 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:25:29 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:25:38 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:25:52 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:26:01 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:26:04 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:26:10 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:26:47 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:26:51 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:27:07 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:27:09 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:27:15 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:27:40 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:27:47 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:27:51 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:27:53 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:28:00 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:28:18 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:28:53 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:29:02 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:29:05 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:29:23 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:29:45 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:30:02 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:30:09 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:34:36 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:34:39 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:35:00 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:35:26 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:35:40 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:35:49 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:36:19 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:36:27 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:37:08 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getSPByCategory | data:{"message":"API Done","total":1609,"value":1,"status":true} | 
+Sat Apr 16 2022 13:37:12 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:37:25 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /editSP | data:{"message":"API Done","main":{"erp_code":"M0A-00000001"},"status":true} | 
+Sat Apr 16 2022 13:37:26 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /editSP | data:{"message":"Activity Log Done","status":true} | 
+Sat Apr 16 2022 13:37:28 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getSPByCategory | data:{"message":"API Done","total":1609,"value":1,"status":true} | 
+Sat Apr 16 2022 13:37:42 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:39:16 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:39:26 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:39:28 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:39:47 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:39:57 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:40:21 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:40:39 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:40:52 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:41:18 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:41:29 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:41:33 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:41:52 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:42:00 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:42:07 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:42:15 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:42:31 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:43:29 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 13:43:40 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":15443,"value":"Mechanical","status":true} | 
+Sat Apr 16 2022 13:43:41 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 
+Sat Apr 16 2022 13:43:41 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":6313,"value":"Electrical","status":true} | 
+Sat Apr 16 2022 13:43:41 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":648,"value":"Vision","status":true} | 
+Sat Apr 16 2022 13:51:21 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":15443,"value":"Mechanical","status":true} | 
+Sat Apr 16 2022 13:51:21 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":648,"value":"Vision","status":true} | 
+Sat Apr 16 2022 13:51:21 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 
+Sat Apr 16 2022 13:51:21 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":6313,"value":"Electrical","status":true} | 
+Sat Apr 16 2022 13:51:26 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getSPByCategory | data:{"message":"API Done","total":1609,"value":1,"status":true} | 
+Sat Apr 16 2022 13:51:30 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /getOneSP | data:{"message":"API Done","value":"24217","status":true} | 
+Sat Apr 16 2022 14:18:24 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":648,"value":"Vision","status":true} | 
+Sat Apr 16 2022 14:18:24 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 
+Sat Apr 16 2022 14:18:24 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":6313,"value":"Electrical","status":true} | 
+Sat Apr 16 2022 14:18:24 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":15443,"value":"Mechanical","status":true} | 
+Sat Apr 16 2022 15:14:34 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":15443,"value":"Mechanical","status":true} | 
+Sat Apr 16 2022 15:14:34 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 
+Sat Apr 16 2022 15:14:34 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":6313,"value":"Electrical","status":true} | 
+Sat Apr 16 2022 15:14:34 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":648,"value":"Vision","status":true} | 
+Sat Apr 16 2022 15:14:46 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":15443,"value":"Mechanical","status":true} | 
+Sat Apr 16 2022 15:14:46 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":648,"value":"Vision","status":true} | 
+Sat Apr 16 2022 15:14:46 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":6313,"value":"Electrical","status":true} | 
+Sat Apr 16 2022 15:14:46 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 
+Sat Apr 16 2022 15:14:47 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":648,"value":"Vision","status":true} | 
+Sat Apr 16 2022 15:14:47 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 
+Sat Apr 16 2022 15:14:47 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":15443,"value":"Mechanical","status":true} | 
+Sat Apr 16 2022 15:14:47 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":6313,"value":"Electrical","status":true} | 
+Sun Apr 17 2022 12:41:26 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":648,"value":"Vision","status":true} | 
+Sun Apr 17 2022 12:41:26 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":15443,"value":"Mechanical","status":true} | 
+Sun Apr 17 2022 12:41:26 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":6313,"value":"Electrical","status":true} | 
+Sun Apr 17 2022 12:41:26 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 
+Sun Apr 17 2022 13:28:32 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":6313,"value":"Electrical","status":true} | 
+Sun Apr 17 2022 13:28:32 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":648,"value":"Vision","status":true} | 
+Sun Apr 17 2022 13:28:32 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 
+Sun Apr 17 2022 13:28:32 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":15443,"value":"Mechanical","status":true} | 
+Sun Apr 17 2022 13:28:36 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":15443,"value":"Mechanical","status":true} | 
+Sun Apr 17 2022 13:28:36 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 
+Sun Apr 17 2022 13:28:36 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":6313,"value":"Electrical","status":true} | 
+Sun Apr 17 2022 13:28:36 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":648,"value":"Vision","status":true} | 
+Sun Apr 17 2022 13:28:45 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":15443,"value":"Mechanical","status":true} | 
+Sun Apr 17 2022 13:28:45 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":6313,"value":"Electrical","status":true} | 
+Sun Apr 17 2022 13:28:45 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 
+Sun Apr 17 2022 13:28:45 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":648,"value":"Vision","status":true} | 
+Mon Apr 18 2022 08:44:38 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":15443,"value":"Mechanical","status":true} | 
+Mon Apr 18 2022 08:44:38 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":6313,"value":"Electrical","status":true} | 
+Mon Apr 18 2022 08:44:38 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":648,"value":"Vision","status":true} | 
+Mon Apr 18 2022 08:44:38 GMT+0800 (China Standard Time) | INFO | standardparts-api.log | API: /countSPBySection | data:{"message":"API Done","total":18,"value":"Software","status":true} | 

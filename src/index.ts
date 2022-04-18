@@ -37,6 +37,7 @@ const main = async () => {
   app.use("/TypeItem", require("./routes/typeitem"));
   app.use("/Category", require("./routes/category"));
   app.use("/FormSettings", require("./routes/formsettings"));
+  app.use("/TesterFormBuilder", require("./routes/TesterFormBuilder"));
   app.use("/Annoucement", require("./routes/news"));
   app.use("/Pending", require("./routes/pending"));
   app.use("/Other", require("./routes/other"));

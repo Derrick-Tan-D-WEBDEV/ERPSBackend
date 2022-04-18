@@ -534,7 +534,9 @@ UserRouter.get("/getUserAdminSuperAdmin", async (_req, res) => {
         "status"
       )
       .where("user.status = 1")
-      .andWhere('user.role = "SuperAdmin" OR user.role = "Admin" OR user.role = "User" OR user.role = "Developer"')
+      .andWhere(
+        'user.role = "SuperAdmin" OR user.role = "Admin" OR user.role = "User" OR user.role = "Developer"'
+      )
       .getRawMany()
       .then((data) => {
         logger.info_obj("API: " + "/getUserAdminSuperAdmin", {
@@ -558,7 +560,7 @@ UserRouter.get("/getUserAdminSuperAdmin", async (_req, res) => {
     });
     res.send({ message: e, status: false });
   }
-})
+});
 
 UserRouter.post("/getOneUser", async (req, res) => {
   const { id } = req.body;
@@ -1118,7 +1120,10 @@ UserRouter.post("/changePassword", async (req, res) => {
       });
     }
 
-    const checkOldPassword = await argon2.verify(checkUser.password, oldPassword)
+    const checkOldPassword = await argon2.verify(
+      checkUser.password,
+      oldPassword
+    );
 
     if (!checkOldPassword) {
       logger.error_obj("API: " + "/changePassword", {
@@ -1194,7 +1199,7 @@ UserRouter.post("/changePasswordByEmail", async (req, res) => {
       to: email,
       subject: "ERP Reset Password", // Subject line
       html:
-        "<p>Click <a href='http://localhost:3000/#/auth/reset-password/" +
+        "<p>Click <a href='http://localhost:3000/#/reset-password/" +
         id +
         "/" +
         token +
@@ -1225,7 +1230,7 @@ UserRouter.post("/resetPassword", async (req, res) => {
   try {
     const newPassword = await argon2.hash(password);
     const jwt = require("jsonwebtoken");
-
+    console.log(id);
     const userInfo = await UserManager.findOneOrFail(User, { id });
     const lastPassword = userInfo?.password;
 

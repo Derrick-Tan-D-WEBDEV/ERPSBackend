@@ -47,3 +47,4 @@ Thu Mar 31 2022 14:34:14 GMT+0800 (Malaysia Time) | ERROR | pendingparts-api.log
 Thu Mar 31 2022 14:34:57 GMT+0800 (Malaysia Time) | ERROR | pendingparts-api.log | API: /approvePending | data:{"message":"API Failed: TypeError: Cannot read properties of undefined (reading 'erp_code')","value":{"id":2,"user_id":"1"},"status":false} | 
 Thu Mar 31 2022 14:35:33 GMT+0800 (Malaysia Time) | INFO | pendingparts-api.log | API: /approvePending | data:{"message":"API Done","data":"M0A-00001613","value":{"id":2,"user_id":"1"},"status":true} | 
 Thu Mar 31 2022 14:35:33 GMT+0800 (Malaysia Time) | INFO | pendingparts-api.log | API: /getAllPendings | data:{"message":"API Done","total":2,"status":true} | 
+Sat Apr 16 2022 12:25:38 GMT+0800 (China Standard Time) | INFO | pendingparts-api.log | API: /getAllPendings | data:{"message":"API Done","total":0,"status":true} | 

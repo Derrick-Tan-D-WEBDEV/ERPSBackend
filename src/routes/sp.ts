@@ -432,21 +432,23 @@ StandardPartRouter.get("/getAllDeletedSP", async (_req, res) => {
 
 StandardPartRouter.post("/getOneSP", async (req, res) => {
   const { id } = req.body;
-  try {
-    const std_part = await SPManager.findOne(StandardParts, { where : { id }})
-    const type_item = await SPManager.findOne(SP_TypeItems, { where : { type_item : std_part?.type_item }})
 
+  try {
+    const std_part = await SPManager.findOne(StandardParts, { where: { id } });
+    const type_item = await SPManager.findOne(SP_TypeItems, {
+      where: { type_item: std_part?.type_item },
+    });
     const type_res = await axios({
-      method : "post",
-      url : "http://localhost:4000/TypeItem/getOneTypeItem",
-      data : type_item
-    })
+      method: "post",
+      url: "http://localhost:4000/TypeItem/getOneTypeItem",
+      data: type_item,
+    });
 
     const cat_res = await axios({
-      method : "post",
-      url : "http://localhost:4000/Category/getOneCategory",
-      data : { id : std_part?.part_id }
-    })
+      method: "post",
+      url: "http://localhost:4000/Category/getOneCategory",
+      data: { id: std_part?.part_id },
+    });
 
     await SPManager.createQueryBuilder(StandardParts, "SP")
       .innerJoinAndSelect("SP.user", "U")
@@ -482,8 +484,8 @@ StandardPartRouter.post("/getOneSP", async (req, res) => {
       .andWhere(`SP.id = ${id}`)
       .getRawOne()
       .then((data) => {
-        data.type_item = type_res.data.data
-        data.category = cat_res.data.data
+        data.type_item = type_res.data.data;
+        data.category = cat_res.data.data;
         logger.info_obj("API: " + "/getOneSP", {
           message: "API Done",
           total: data.length,
@@ -588,7 +590,11 @@ StandardPartRouter.post("/addSP", async (req, res) => {
       finalERP = initial + "-" + getNumber;
     }
 
-    if (section == "Software" || section == "Vision" || section == "Electrical") {
+    if (
+      section == "Software" ||
+      section == "Vision" ||
+      section == "Electrical"
+    ) {
       if (lastData === undefined) {
         getNumber = (parseInt("000000") + 1).toString().padStart(6, "0");
       } else {
@@ -958,7 +964,11 @@ StandardPartRouter.post("/addPendingSP", async (req, res) => {
       finalERP = initial + "-" + getNumber;
     }
 
-    if (section == "Software" || section == "Vision" || section == "Electrical") {
+    if (
+      section == "Software" ||
+      section == "Vision" ||
+      section == "Electrical"
+    ) {
       if (lastData === undefined) {
         getNumber = (parseInt("000000") + 1).toString().padStart(6, "0");
       } else {
@@ -999,9 +1009,7 @@ StandardPartRouter.post("/addPendingSP", async (req, res) => {
       },
     });
 
-    if (
-      checkRedundantStdParts !== undefined
-    ) {
+    if (checkRedundantStdParts !== undefined) {
       logger.error_obj("API: " + "/addSP", {
         message:
           "API Error: " +
@@ -1109,9 +1117,7 @@ StandardPartRouter.post("/addPendingSPMS", async (req, res) => {
       },
     });
 
-    if (
-      checkRedundantStdParts !== undefined
-    ) {
+    if (checkRedundantStdParts !== undefined) {
       logger.error_obj("API: " + "/addPendingSPMS", {
         message:
           "API Error: " +
@@ -1170,9 +1176,7 @@ StandardPartRouter.post("/addPendingSPMS", async (req, res) => {
         },
       });
 
-      if (
-        subCheckRedundantStdParts !== undefined
-      ) {
+      if (subCheckRedundantStdParts !== undefined) {
         logger.error_obj("API: " + "/addPendingSPMS", {
           message:
             "API Error: " +
@@ -1311,7 +1315,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
               greatech_drawing_naming,
               brand,
               description,
-              type_item : type_item.TypeItems_type_item,
+              type_item: type_item.TypeItems_type_item,
               uom,
               update_date: currentDatetime,
               remark,
@@ -1329,7 +1333,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
             .then((data) => {
               logger.info_obj("API: " + "/editSP", {
                 message: "API Done",
-                main: {erp_code : f_erp_code},
+                main: { erp_code: f_erp_code },
                 status: true,
               });
               updateActivityLog(
@@ -1342,7 +1346,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
               );
               res.send({
                 data: `Insert Successfully`,
-                main: {erp_code : f_erp_code},
+                main: { erp_code: f_erp_code },
                 status: true,
               });
             })
@@ -1622,7 +1626,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
             greatech_drawing_naming,
             brand,
             description,
-            type_item : type_item.TypeItems_type_item,
+            type_item: type_item.TypeItems_type_item,
             uom,
             remark,
             update_date: currentDatetime,
@@ -1727,7 +1731,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
             greatech_drawing_naming,
             brand,
             description,
-            type_item : type_item.TypeItems_type_item,
+            type_item: type_item.TypeItems_type_item,
             uom,
             remark,
             update_date: currentDatetime,
@@ -1745,7 +1749,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
           .then((data) => {
             logger.info_obj("API: " + "/editSP", {
               message: "API Done",
-              main: {erp_code : f_erp_code},
+              main: { erp_code: f_erp_code },
               status: true,
             });
             updateActivityLog(
@@ -1756,7 +1760,11 @@ StandardPartRouter.post("/editSP", async (req, res) => {
               "EDIT",
               "Edit Standard Parts"
             );
-            res.send({ data: `Insert Successfully`, main: {erp_code : f_erp_code}, status: true });
+            res.send({
+              data: `Insert Successfully`,
+              main: { erp_code: f_erp_code },
+              status: true,
+            });
           })
           .catch((e) => {
             logger.error_obj("API: " + "/editSP", {
@@ -1768,7 +1776,9 @@ StandardPartRouter.post("/editSP", async (req, res) => {
           });
       }
     } else {
-      const code = await SPManager.findOne(SP_Category, { where: { id: part_id } });
+      const code = await SPManager.findOne(SP_Category, {
+        where: { id: part_id },
+      });
       const initial = code?.code;
       const lastData = await SPManager.findOne(StandardParts, {
         where: { part_id },
@@ -2007,9 +2017,8 @@ StandardPartRouter.post("/editSP", async (req, res) => {
               res.send({ data: `Error On Insert To DB: ` + e, status: false });
             });
         }
-      } 
-      else if (f_code != "M0J" && section == "Mechanical") {
-        console.log("OKO")
+      } else if (f_code != "M0J" && section == "Mechanical") {
+        console.log("OKO");
         if (lastData === undefined) {
           getNumber = (parseInt("00000000") + 1).toString().padStart(8, "0");
         }
@@ -2100,7 +2109,11 @@ StandardPartRouter.post("/editSP", async (req, res) => {
             });
             res.send({ data: `Error On Insert To DB: ` + e, status: false });
           });
-      } else if (section == "Vision" || section == "Software" || section == "Electrical") {
+      } else if (
+        section == "Vision" ||
+        section == "Software" ||
+        section == "Electrical"
+      ) {
         if (lastData === undefined) {
           getNumber = (parseInt("000000") + 1).toString().padStart(6, "0");
         }
@@ -2311,7 +2324,7 @@ StandardPartRouter.post("/switchSPUser", async (req, res) => {
   const { old_id, new_id, user_id } = req.body;
   try {
     const currentDatetime = moment().format();
-    const checkNewId = await SPManager.findOne(User, { where : { id : new_id }});
+    const checkNewId = await SPManager.findOne(User, { where: { id: new_id } });
     const getERPToChange = await SPManager.createQueryBuilder(
       StandardParts,
       "SP"
@@ -2354,7 +2367,11 @@ StandardPartRouter.post("/switchSPUser", async (req, res) => {
           "EDIT",
           "Change Standard Parts of User"
         );
-        res.send({ data: `User Change Successfully`, main: data, status: true });
+        res.send({
+          data: `User Change Successfully`,
+          main: data,
+          status: true,
+        });
       })
       .catch((e) => {
         logger.error_obj("API: " + "/switchSPUser", {
@@ -2403,71 +2420,71 @@ StandardPartRouter.post("/countSPBySection", async (req, res) => {
 });
 
 StandardPartRouter.post("/countSPByUserId", async (req, res) => {
-    const { user_id } = req.body;
-    try {
-        await SPManager.createQueryBuilder(StandardParts, "SP")
-        .select(["SP.id AS id"])
-        .where("SP.status = 1")
-        .andWhere(`SP.user_id = "${user_id}"`)
-        .getCount()
-        .then((data) => {
-            logger.info_obj("API: " + "/countSPByUserId", {
-            message: "API Done",
-            total: data,
-            value: user_id,
-            status: true,
-            });
-            res.send({ data, total: data, status: true });
-        })
-        .catch((e) => {
-            logger.error_obj("API: " + "/countSPByUserId", {
-            message: "API Error: " + e,
-            value: user_id,
-            status: false,
-            });
-            res.send({ message: e, status: false });
+  const { user_id } = req.body;
+  try {
+    await SPManager.createQueryBuilder(StandardParts, "SP")
+      .select(["SP.id AS id"])
+      .where("SP.status = 1")
+      .andWhere(`SP.user_id = "${user_id}"`)
+      .getCount()
+      .then((data) => {
+        logger.info_obj("API: " + "/countSPByUserId", {
+          message: "API Done",
+          total: data,
+          value: user_id,
+          status: true,
         });
-    } catch (e) {
+        res.send({ data, total: data, status: true });
+      })
+      .catch((e) => {
         logger.error_obj("API: " + "/countSPByUserId", {
-        message: "API Failed: " + e,
-        value: user_id,
-        status: false,
+          message: "API Error: " + e,
+          value: user_id,
+          status: false,
         });
         res.send({ message: e, status: false });
-    }
-});
-  
-StandardPartRouter.get("/countAllSP", async (_req, res) => {
-    try {
-      await SPManager.createQueryBuilder(StandardParts, "SP")
-        .select(["SP.id AS id"])
-        .where("SP.status = 1")
-        .getCount()
-        .then((data) => {
-          logger.info_obj("API: " + "/countAllSP", {
-            message: "API Done",
-            total: data,
-            value: "",
-            status: true,
-          });
-          res.send({ data, total: data, status: true });
-        })
-        .catch((e) => {
-          logger.error_obj("API: " + "/countAllSP", {
-            message: "API Error: " + e,
-            value: "",
-            status: false,
-          });
-          res.send({ message: e, status: false });
-        });
-    } catch (e) {
-      logger.error_obj("API: " + "/countAllSP", {
-        message: "API Failed: " + e,
-        value: "",
-        status: false,
       });
-      res.send({ message: e, status: false });
-    }
+  } catch (e) {
+    logger.error_obj("API: " + "/countSPByUserId", {
+      message: "API Failed: " + e,
+      value: user_id,
+      status: false,
+    });
+    res.send({ message: e, status: false });
+  }
+});
+
+StandardPartRouter.get("/countAllSP", async (_req, res) => {
+  try {
+    await SPManager.createQueryBuilder(StandardParts, "SP")
+      .select(["SP.id AS id"])
+      .where("SP.status = 1")
+      .getCount()
+      .then((data) => {
+        logger.info_obj("API: " + "/countAllSP", {
+          message: "API Done",
+          total: data,
+          value: "",
+          status: true,
+        });
+        res.send({ data, total: data, status: true });
+      })
+      .catch((e) => {
+        logger.error_obj("API: " + "/countAllSP", {
+          message: "API Error: " + e,
+          value: "",
+          status: false,
+        });
+        res.send({ message: e, status: false });
+      });
+  } catch (e) {
+    logger.error_obj("API: " + "/countAllSP", {
+      message: "API Failed: " + e,
+      value: "",
+      status: false,
+    });
+    res.send({ message: e, status: false });
+  }
 });
 
 module.exports = StandardPartRouter;
