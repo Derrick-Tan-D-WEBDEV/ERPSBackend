@@ -7,6 +7,7 @@ import { SP_TypeItems } from "../entity/SP_TypeItem";
 import { LoggerService } from "../LoggerService";
 import { PendingParts } from "../entity/SP_Pending";
 import { ActivityLog } from "../entity/ActivityLog";
+import { UserIcon } from "../entity/UserIcon";
 import { User } from "../entity/User";
 import argon2 from "argon2";
 import { createAccessToken } from "../auth";
