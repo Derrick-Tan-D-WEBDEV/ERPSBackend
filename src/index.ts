@@ -3,6 +3,8 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { createConnections } from "typeorm";
+
+var bodyParser = require('body-parser');
 const swaggerUi = require("swagger-ui-express");
 const swaggerFile = require("./swagger_output.json");
 
@@ -25,9 +27,8 @@ const main = async () => {
       console.log(error);
     });
 
-  app.use(express.json());
-
-  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json({limit: '50mb'}));
+  app.use(express.urlencoded({limit: '50mb', extended: true}));
 
   app.get("/", (_req, res) => res.send("Successful Connection"));
 
