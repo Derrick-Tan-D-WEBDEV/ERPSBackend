@@ -212,7 +212,6 @@ SPNewsRouter.post("/addNews", async (req, res) => {
       .then((data) => {
         logger.info_obj("API: " + "/addNews", {
           message: "API Done",
-          value: values,
           status: true,
         });
         res.send({ data, value: values, status: true });
@@ -246,7 +245,6 @@ SPNewsRouter.post("/editNews", async (req, res) => {
       if (checkDuplicate?.id != id) {
         logger.error_obj("API: " + "/editNews", {
           message: "API Error: " + `Redundant on News ${values.title}.`,
-          value: values,
           status: false,
         });
         return res.send({
