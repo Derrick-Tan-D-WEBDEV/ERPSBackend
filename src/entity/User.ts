@@ -4,11 +4,13 @@ import {
     Column,
     BaseEntity,
     OneToMany,
+    OneToOne,
   } from "typeorm";
 import { ActivityLog } from "./ActivityLog";
 import { NewsAnnouncement } from "./News";
 import { StandardParts } from "./SP";
 import { PendingParts } from "./SP_Pending";
+import { UserIcon } from "./UserIcon";
 
 @Entity({name: "user" })
 export class User extends BaseEntity {
@@ -56,4 +58,7 @@ export class User extends BaseEntity {
 
     @OneToMany(() => ActivityLog, activityLog => activityLog.user)
     activityLog : ActivityLog[];
+
+    @OneToOne(() => UserIcon, userIcon => userIcon.user)
+    userIcon : UserIcon;
 }

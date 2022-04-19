@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "./User";
 
 @Entity({ name: "user_icon" })
 export class UserIcon extends BaseEntity {
@@ -7,6 +8,10 @@ export class UserIcon extends BaseEntity {
 
   @Column()
   user_id : number;
+
+  @OneToOne(type => User, user => user.userIcon)
+  @JoinColumn({ name: "user_id", referencedColumnName: "id"})
+  user : User
 
   @Column()
   accessory : string;
