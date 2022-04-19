@@ -1077,6 +1077,7 @@ UserRouter.post("/loginUser", async (req, res) => {
       id: user.id,
       name: user.name,
       role: user.role,
+      section: user.section,
     });
   } catch (e) {
     logger.error_obj("API: " + "/loginUser", {
