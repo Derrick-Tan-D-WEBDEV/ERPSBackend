@@ -1201,7 +1201,7 @@ UserRouter.post("/changePasswordByEmail", async (req, res) => {
       to: email,
       subject: "ERP Reset Password", // Subject line
       html:
-        "<p>Click <a href='http://localhost:3000/#/reset-password/" +
+        "<p>Click <a href='http://192.168.0.24/ERPs/#/reset-password/" +
         id +
         "/" +
         token +

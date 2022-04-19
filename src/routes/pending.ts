@@ -688,7 +688,7 @@ PendingPartRouter.post("/approvePending", async (req, res) => {
 
             const resp = await axios({
                 method : "post",
-                url : "http://localhost:4000/SP/addPendingSPMS",
+                url : "http://192.168.0.24:4000/SP/addPendingSPMS",
                 data : data
             })
             
@@ -725,7 +725,7 @@ PendingPartRouter.post("/approvePending", async (req, res) => {
 
             const resp = await axios({
                 method : "post",
-                url : "http://localhost:4000/SP/addPendingSP",
+                url : "http://192.168.0.24:4000/SP/addPendingSP",
                 data : data
             })
             

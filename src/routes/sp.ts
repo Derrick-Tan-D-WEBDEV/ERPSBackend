@@ -456,13 +456,13 @@ StandardPartRouter.post("/getOneSP", async (req, res) => {
     });
     const type_res = await axios({
       method: "post",
-      url: "http://localhost:4000/TypeItem/getOneTypeItem",
+      url: "http://192.168.0.24:4000/TypeItem/getOneTypeItem",
       data: type_item,
     });
 
     const cat_res = await axios({
       method: "post",
-      url: "http://localhost:4000/Category/getOneCategory",
+      url: "http://192.168.0.24:4000/Category/getOneCategory",
       data: { id: std_part?.part_id },
     });
 
