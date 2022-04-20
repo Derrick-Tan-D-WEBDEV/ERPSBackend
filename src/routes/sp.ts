@@ -1276,9 +1276,20 @@ StandardPartRouter.post("/editSP", async (req, res) => {
       solidworks_folder,
       assign_material,
       assign_weight,
-      vendor,
       section,
     } = data;
+
+    let vendor = "";
+    if (data.vendor === "Local Vendor") {
+      vendor = "LV";
+    } else if (data.vendor === "Appointed Vendor") {
+      vendor = "AV";
+    } else {
+      return res.send({
+        message: `Invalid Vendor`,
+        status: false,
+      });
+    }
 
     const part_id = category.Category_id;
 
@@ -1322,6 +1333,8 @@ StandardPartRouter.post("/editSP", async (req, res) => {
     const f_erp_code = fetchId?.erp_code;
     const f_vendor = fetchId?.vendor;
     const f_code = f_erp_code!.split("-")[0];
+
+    console.log(f_vendor,vendor)
 
     if (part_id == f_part_id) {
       if (f_code == "M0J") {
@@ -1413,7 +1426,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
             });
           });
 
-          if (vendor == "Local Vendor") {
+          if (vendor == "LV") {
             const vendorLVData = await SPManager.query(
               `SELECT * FROM standard_parts WHERE erp_code LIKE '%M0J%' AND CONVERT(RIGHT(erp_code, 8), SIGNED) 
                             BETWEEN 1 AND 09999 ORDER BY RIGHT(erp_code, 8) DESC LIMIT 1`
@@ -1524,7 +1537,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
                 });
               });
           }
-          if (vendor == "Appointed Vendor") {
+          if (vendor == "AV") {
             const vendorAVData = await SPManager.query(
               `SELECT * FROM standard_parts WHERE erp_code LIKE '%M0J%' AND 
                             CONVERT(RIGHT(erp_code, 8), SIGNED) ORDER BY RIGHT(erp_code, 8) DESC LIMIT 1`
