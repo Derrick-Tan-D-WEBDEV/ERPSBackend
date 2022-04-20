@@ -101,12 +101,13 @@ TesterFormBuilderRouter.post("/createTesterFormBuilder", async (req, res) => {
 
     if (checkDuplicate !== undefined) {
       logger.error_obj("API: " + "/createTesterFormBuilder", {
-        message: "API Error: " + `Redundant on Type Item ${values.type_item}.`,
+        message:
+          "API Error: " + `Redundant on Form Builder Title ${values.title}.`,
         value: values,
         status: false,
       });
       return res.send({
-        message: `Redundant on Type Item ${values.type_item}.`,
+        message: `Redundant on Form Builder Title ${values.title}.`,
         status: false,
       });
     }
@@ -129,6 +130,54 @@ TesterFormBuilderRouter.post("/createTesterFormBuilder", async (req, res) => {
       });
   } catch (e) {
     logger.error_obj("API: " + "/createTesterFormBuilder", {
+      message: "API Failed: " + e,
+      status: false,
+    });
+    res.send({ message: e, status: false });
+  }
+});
+
+TesterFormBuilderRouter.post("/updateTesterFormBuilder", async (req, res) => {
+  const { id, values } = req.body;
+  try {
+    const checkDuplicate = await TesterFormBuilderManager.findOne(
+      TesterFormBuilder,
+      {
+        title: values.title,
+      }
+    );
+
+    if (checkDuplicate !== undefined) {
+      logger.error_obj("API: " + "/updateTesterFormBuilder", {
+        message:
+          "API Error: " + `Redundant on Form Builder Title ${values.title}.`,
+        value: values,
+        status: false,
+      });
+      return res.send({
+        message: `Redundant on Form Builder Title ${values.title}.`,
+        status: false,
+      });
+    }
+
+    await TesterFormBuilderManager.update(TesterFormBuilder, { id }, values)
+      .then((data) => {
+        logger.info_obj("API: " + "/updateTesterFormBuilder", {
+          message: "API Done",
+          value: values,
+          status: true,
+        });
+        res.send({ data, value: values, status: true });
+      })
+      .catch((e) => {
+        logger.error_obj("API: " + "/updateTesterFormBuilder", {
+          message: "API Error: " + e,
+          status: false,
+        });
+        res.send({ message: e, status: false });
+      });
+  } catch (e) {
+    logger.error_obj("API: " + "/updateTesterFormBuilder", {
       message: "API Failed: " + e,
       status: false,
     });
