@@ -253,30 +253,68 @@ IconRouter.post("/editUserIcon", async (req, res) => {
 IconRouter.post("/getUserIcon", async (req, res) => {
     const { user_id } = req.body;
     try {
-        await IconManager.findOne(UserIcon, { user_id })
-        .then((data) => {
+        const checkIcon = await IconManager.findOne(UserIcon, { user_id })
+
+        if (checkIcon === undefined) {
+            const mainIcon = {
+                accessory : "shades",
+                body: "breasts",
+                circleColor: "blue",
+                clothing: "tankTop",
+                clothingColor: "black",
+                eyebrows: "angry",
+                eyes: "wink",
+                facialHair: "mediumBeard",
+                graphic: "vue",
+                hair: "beanie",
+                hairColor: "black",
+                hat: "green",
+                hatColor: "green",
+                lashes: "false",
+                lipColor: "purple",
+                mask: "true",
+                faceMask: "true",
+                mouth: "open",
+                skinTone: "brown",
+                faceMaskColor: "blue",
+                user_id,
+                status : 1
+            }
+            logger.info_obj("API: " + "/getUserIcon", {
+                message: "API Done [USER ICON NOT FOUND]",
+                main: mainIcon,
+                status: true,
+            });
+            res.send({
+                data: `Get Default Icon Successfully`,
+                main: mainIcon,
+                status: true,
+            });
+
+        }
+        else {
             logger.info_obj("API: " + "/getUserIcon", {
                 message: "API Done",
-                main: data,
+                main: checkIcon,
                 status: true,
             });
             res.send({
                 data: `Get Successfully`,
-                main: data,
+                main: checkIcon,
                 status: true,
             });
-        })
-        .catch((e) => {
-            logger.error_obj("API: " + "/getUserIcon", {
-                message: "API Error" + e,
-                value: user_id,
-                status: false,
-            });
-            res.send({ data: `Unable to get data from DB: ` + e, status: false });
-        })
+        }
+        // .catch((e) => {
+        //     logger.error_obj("API: " + "/getUserIcon", {
+        //         message: "API Error" + e,
+        //         value: user_id,
+        //         status: false,
+        //     });
+        //     res.send({ data: `Unable to get data from DB: ` + e, status: false });
+        // })
     }
     catch(e) {
-        logger.error_obj("API: " + "/editUsgetUserIconerIcon", {
+        logger.error_obj("API: " + "/getUserIcon", {
             message: "API Failed: " + e,
             value: user_id,
             status: false,

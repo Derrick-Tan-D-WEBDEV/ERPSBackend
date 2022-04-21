@@ -11,8 +11,7 @@ import { UserIcon } from "../entity/UserIcon";
 import { User } from "../entity/User";
 import argon2 from "argon2";
 import { createAccessToken } from "../auth";
-import { platform } from "os";
-import { Console } from "console";
+import axios from "axios";
 
 const logger = new LoggerService("users-api");
 const UserRouter = Router();
@@ -750,6 +749,41 @@ UserRouter.post("/createUser", async (req, res) => {
         });
         res.send({ data: `Error On Insert To DB: ` + e, status: false });
       });
+
+      // const usr = await UserManager.findOne(User, { name : name })
+
+      // const user_id = usr?.id
+      
+      // const mainIcon = {
+      //   accessory : "shades",
+      //   body: "breasts",
+      //   circleColor: "blue",
+      //   clothing: "tankTop",
+      //   clothingColor: "black",
+      //   eyebrows: "angry",
+      //   eyes: "wink",
+      //   facialHair: "mediumBeard",
+      //   graphic: "vue",
+      //   hair: "beanie",
+      //   hairColor: "black",
+      //   hat: "green",
+      //   hatColor: "green",
+      //   lashes: "false",
+      //   lipColor: "purple",
+      //   mask: "true",
+      //   faceMask: "true",
+      //   mouth: "open",
+      //   skinTone: "brown",
+      //   faceMaskColor: "blue",
+      //   user_id,
+      //   status : 1
+      // }
+
+      // const resp = await axios({
+      //   method : "post",
+      //   url : "http://192.168.0.24:4000/UserIcon/addUserIcon",
+      //   data : mainIcon
+      // })
   } catch (e) {
     logger.error_obj("API: " + "/createUser", {
       message: "API Failed: " + e,
