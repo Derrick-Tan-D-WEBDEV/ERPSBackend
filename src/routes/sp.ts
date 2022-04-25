@@ -67,7 +67,7 @@ StandardPartRouter.get("/getAllSP", async (_req, res) => {
       .innerJoinAndSelect("SP.user", "U")
       .innerJoinAndSelect("SP.SPCategory", "C")
       .select(["SP.id AS id"])
-      .addSelect(["U.fullname AS fullname"])
+      .addSelect(["U.fullname AS fullname", "U.id AS user_id"])
       .addSelect([
         "C.description AS category_desc",
         "C.category_type AS category_type",
@@ -129,7 +129,7 @@ StandardPartRouter.post("/getSPBySection", async (req, res) => {
       .innerJoinAndSelect("SP.user", "U")
       .innerJoinAndSelect("SP.SPCategory", "C")
       .select(["SP.id AS id"])
-      .addSelect(["U.fullname AS fullname"])
+      .addSelect(["U.fullname AS fullname", "U.id AS user_id"])
       .addSelect([
         "C.description AS category_desc",
         "C.category_type AS category_type",
@@ -326,7 +326,7 @@ StandardPartRouter.post("/getSPByUserID", async (req, res) => {
       .innerJoinAndSelect("SP.user", "U")
       .innerJoinAndSelect("SP.SPCategory", "C")
       .select(["SP.id AS id"])
-      .addSelect(["U.fullname AS fullname"])
+      .addSelect(["U.fullname AS fullname", "U.id AS user_id"])
       .addSelect([
         "C.description AS category_desc",
         "C.category_type AS category_type",
@@ -391,7 +391,7 @@ StandardPartRouter.get("/getAllDeletedSP", async (_req, res) => {
       .innerJoinAndSelect("SP.user", "U")
       .innerJoinAndSelect("SP.SPCategory", "C")
       .select(["SP.id AS id"])
-      .addSelect(["U.fullname AS fullname"])
+      .addSelect(["U.fullname AS fullname", "U.id AS user_id"])
       .addSelect([
         "C.description AS category_desc",
         "C.category_type AS category_type",

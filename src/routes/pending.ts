@@ -23,7 +23,7 @@ PendingPartRouter.get("/getAllPendings", async (_req, res) => {
             .innerJoinAndSelect("P.spCategory", "C")
             // .innerJoinAndSelect("P.approveUser", "A")
             .select(["P.id AS id"])
-            .addSelect(["U.fullname AS fullname"])
+            .addSelect(["U.fullname AS fullname", "U.id AS user_id"])
             .addSelect([
                 "C.description AS category_desc",
                 "C.category_type AS category_type",
@@ -98,7 +98,7 @@ PendingPartRouter.get("/getAllPending", async (_req, res) => {
             .innerJoinAndSelect("P.spCategory", "C")
             // .innerJoinAndSelect("P.approveUser", "A")
             .select(["P.id AS id"])
-            .addSelect(["U.fullname AS fullname"])
+            .addSelect(["U.fullname AS fullname", "U.id AS user_id"])
             .addSelect([
                 "C.description AS category_desc",
                 "C.category_type AS category_type",
@@ -173,7 +173,7 @@ PendingPartRouter.get("/getAllApproved", async (_req, res) => {
             .innerJoinAndSelect("P.spCategory", "C")
             // .innerJoinAndSelect("P.approveUser", "A")
             .select(["P.id AS id"])
-            .addSelect(["U.fullname AS fullname"])
+            .addSelect(["U.fullname AS fullname", "U.id AS user_id"])
             .addSelect([
                 "C.description AS category_desc",
                 "C.category_type AS category_type",
@@ -248,7 +248,7 @@ PendingPartRouter.get("/getAllRejected", async (_req, res) => {
             .innerJoinAndSelect("P.spCategory", "C")
             // .innerJoinAndSelect("P.approveUser", "A")
             .select(["P.id AS id"])
-            .addSelect(["U.fullname AS fullname"])
+            .addSelect(["U.fullname AS fullname", "U.id AS user_id"])
             .addSelect([
                 "C.description AS category_desc",
                 "C.category_type AS category_type",
@@ -324,7 +324,7 @@ PendingPartRouter.post("/getAllBySection", async (req, res) => {
             .innerJoinAndSelect("P.spCategory", "C")
             // .innerJoinAndSelect("P.approveUser", "A")
             .select(["P.id AS id"])
-            .addSelect(["U.fullname AS fullname"])
+            .addSelect(["U.fullname AS fullname", "U.id AS user_id"])
             .addSelect([
                 "C.description AS category_desc",
                 "C.category_type AS category_type",
@@ -403,7 +403,7 @@ PendingPartRouter.post("/getAllByUser", async (req, res) => {
             .innerJoinAndSelect("P.spCategory", "C")
             // .innerJoinAndSelect("P.approveUser", "A")
             .select(["P.id AS id"])
-            .addSelect(["U.fullname AS fullname"])
+            .addSelect(["U.fullname AS fullname", "U.id AS user_id"])
             .addSelect([
                 "C.description AS category_desc",
                 "C.category_type AS category_type",
@@ -482,7 +482,7 @@ PendingPartRouter.post("/getAllByCategory", async (req, res) => {
             .innerJoinAndSelect("P.spCategory", "C")
             // .innerJoinAndSelect("P.approveUser", "A")
             .select(["P.id AS id"])
-            .addSelect(["U.fullname AS fullname"])
+            .addSelect(["U.fullname AS fullname", "U.id AS user_id"])
             .addSelect([
                 "C.description AS category_desc",
                 "C.category_type AS category_type",
@@ -561,7 +561,7 @@ PendingPartRouter.post("/getOnePending", async (req, res) => {
             .innerJoinAndSelect("P.spCategory", "C")
             // .innerJoinAndSelect("P.approveUser", "A")
             .select(["P.id AS id"])
-            .addSelect(["U.fullname AS fullname"])
+            .addSelect(["U.fullname AS fullname", "U.id AS user_id"])
             .addSelect([
                 "C.description AS category_desc",
                 "C.category_type AS category_type",
@@ -637,11 +637,11 @@ PendingPartRouter.post("/approvePending", async (req, res) => {
     var data: any = {};
     try {
         const pending_part = await PendingManager.createQueryBuilder(PendingParts, "P")
-                                .innerJoinAndSelect("P.user", "U")
+                                .innerJoinAndSelect("P.approveUser", "AU")
                                 .innerJoinAndSelect("P.spCategory", "C")
                                 // .innerJoinAndSelect("P.approveUser", "A")
                                 .select(["P.id AS id"])
-                                .addSelect(["U.id AS user_id"])
+                                .addSelect(["AU.id AS user_id"])
                                 .addSelect(["C.id AS part_id"])
                                 .addSelect([
                                     "P.type_item AS type_item",

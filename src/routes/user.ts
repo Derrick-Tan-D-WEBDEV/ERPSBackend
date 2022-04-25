@@ -698,7 +698,7 @@ UserRouter.post("/createUser", async (req, res) => {
   try {
     const { employeeID, fullname, name, email, section, role } = values;
 
-    const password = await argon2.hash("Greatech123");
+    const password = await argon2.hash("123");
     const checkExist = await UserManager.findOne(User, {
       where: [{ email }, { employeeID }],
     });
