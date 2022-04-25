@@ -373,7 +373,7 @@ OtherRouter.get("/getAllExcel", async (_req, res) => {
                                          .where("SP.status = 1")
                                          .andWhere(`SP.erp_code LIKE "%${ worksheetcode }%"`)
                                          .getRawMany()
-18
+
             if (data.length != 0) {
                 var ws = xlsx.utils.json_to_sheet(data);
                 ws.A1.v = 'ERP Number';
@@ -409,6 +409,54 @@ OtherRouter.get("/getAllExcel", async (_req, res) => {
     }
     catch(e) {
         logger.error_obj("API: " + "/getAllExcel", {
+            message: "API Failed: " + e,
+            status: false,
+        });
+        res.send({ message: e, status: false });
+    }
+})
+
+OtherRouter.get("/getElecDomain", async (_req, res) => {
+    try {
+        const code = await OtherManager.find(SP_Category);
+        var wb = xlsx.utils.book_new();
+
+        var data = await OtherManager.createQueryBuilder(StandardParts, "SP")
+                                        .innerJoinAndSelect("SP.user", "U")
+                                        .innerJoinAndSelect("SP.SPCategory", "C")
+                                        .select([
+                                            "SP.product_part_number AS product_part_number",
+                                            "SP.erp_code AS erp_code",
+                                            "SP.description AS description",
+                                            "SP.brand AS brand",
+                                            "SP.uom AS uom"
+                                        ])
+                                        .where("SP.status = 1")
+                                        .andWhere(`SP.section = "Electrical"`)
+                                        .orWhere(`SP.section = "Mechanical"`)
+                                        .orWhere(`SP.section = "Software"`)
+                                        .orderBy("SP.erp_code", "ASC")
+                                        .getRawMany()
+
+        if (data.length != 0) {
+            var ws = xlsx.utils.json_to_sheet(data);
+            ws.A1.v = 'PART NUMBER';
+            ws.B1.v = 'ERP CODE';
+            ws.C1.v = 'DESCRIPTION';
+            ws.D1.v = 'BRAND';
+            ws.E1.v = 'UOM';
+            xlsx.utils.book_append_sheet(wb, ws, "Part");
+        }
+
+        xlsx.writeFile(wb, 'ElectricalDomain_Generated.xlsx');
+        logger.info_obj("API: " + "/getElecDomain", {
+            message: "API Done",
+            status: true,
+        });
+        res.download('./ElectricalDomain_Generated.xlsx', 'ElectricalDomain_Generated.xlsx')
+    }
+    catch(e) {
+        logger.error_obj("API: " + "/getElecDomain", {
             message: "API Failed: " + e,
             status: false,
         });
