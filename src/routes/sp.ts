@@ -158,8 +158,8 @@ StandardPartRouter.post("/getSPBySection", async (req, res) => {
         "CASE WHEN SP.status = 1 then 'Show' else 'Hide' end",
         "status"
       )
-      .where("SP.status = 1")
-      .andWhere(`SP.section = "${sect}"`)
+      // .where("SP.status = 1")
+      .where(`SP.section = "${sect}"`)
       .getRawMany()
       .then((data) => {
         logger.info_obj("API: " + "/getSPBySection", {
@@ -454,6 +454,7 @@ StandardPartRouter.post("/getOneSP", async (req, res) => {
     const type_item = await SPManager.findOne(SP_TypeItems, {
       where: { type_item: std_part?.type_item },
     });
+    console.log(std_part)
     const type_res = await axios({
       method: "post",
       url: "http://192.168.0.24:4000/TypeItem/getOneTypeItem",
@@ -471,6 +472,10 @@ StandardPartRouter.post("/getOneSP", async (req, res) => {
       .innerJoinAndSelect("SP.SPCategory", "C")
       .select(["SP.id AS id"])
       .addSelect(["U.fullname AS fullname", "U.id AS user_id"])
+      .addSelect([
+        "C.description AS category_desc",
+        "C.category_type AS category_type",
+      ])
       .addSelect([
         "SP.erp_code AS erp_code",
         "SP.product_part_number AS product_part_number",
@@ -651,6 +656,7 @@ StandardPartRouter.post("/addSP", async (req, res) => {
       where: {
         product_part_number: data.product_part_number,
         brand: data.brand,
+        status: 0
       },
     });
 
@@ -733,7 +739,7 @@ StandardPartRouter.post("/addSPMS", async (req, res) => {
 
     const lastData = await SPManager.findOne(StandardParts, {
       where: { part_id },
-      order: { id: "DESC" },
+      order: { erp_code: "DESC" },
     });
 
     const [_letterHalf, numberHalf] = lastData!.erp_code.split("-");
@@ -769,6 +775,7 @@ StandardPartRouter.post("/addSPMS", async (req, res) => {
       where: {
         product_part_number: data.product_part_number,
         brand: data.brand,
+        status: 0
       },
     });
 
@@ -837,6 +844,7 @@ StandardPartRouter.post("/addSPMS", async (req, res) => {
         where: {
           product_part_number: element.product_part_number,
           brand: element.brand,
+          status: 0
         },
       });
       const subCheckRedundantStdParts = await SPManager.findOne(StandardParts, {
@@ -1097,7 +1105,7 @@ StandardPartRouter.post("/addPendingSPMS", async (req, res) => {
 
     const lastData = await SPManager.findOne(StandardParts, {
       where: { part_id },
-      order: { id: "DESC" },
+      order: { erp_code: "DESC" },
     });
 
     const [_letterHalf, numberHalf] = lastData!.erp_code.split("-");
@@ -1280,16 +1288,6 @@ StandardPartRouter.post("/editSP", async (req, res) => {
     } = data;
 
     let vendor = "";
-    if (data.vendor === "Local Vendor") {
-      vendor = "LV";
-    } else if (data.vendor === "Appointed Vendor") {
-      vendor = "AV";
-    } else {
-      return res.send({
-        message: `Invalid Vendor`,
-        status: false,
-      });
-    }
 
     const part_id = category.Category_id;
 
@@ -1297,6 +1295,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
       where: {
         product_part_number: data.product_part_number,
         brand: data.brand,
+        status: 0
       },
     });
     const subCheckRedundantStdParts = await SPManager.findOne(StandardParts, {
@@ -1334,10 +1333,24 @@ StandardPartRouter.post("/editSP", async (req, res) => {
     const f_vendor = fetchId?.vendor;
     const f_code = f_erp_code!.split("-")[0];
 
-    console.log(f_vendor,vendor)
-
     if (part_id == f_part_id) {
       if (f_code == "M0J") {
+        if (data.vendor === "Local Vendor") {
+          vendor = "LV";
+        } else if (data.vendor === "Appointed Vendor") {
+          vendor = "AV";
+        } else {
+          logger.error_obj("API: " + "/editSP", {
+            message:
+              "API Error: " +
+              `Error on Vendor: ${vendor}`,
+            status: false,
+          });
+          return res.send({
+            message: `Invalid Vendor`,
+            status: false,
+          });
+        }
         if (f_vendor == vendor) {
           await SPManager.update(
             StandardParts,
@@ -1469,6 +1482,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
                 where: {
                   product_part_number: data.product_part_number,
                   brand: data.brand,
+                  status: 0
                 },
               }
             );
@@ -1580,6 +1594,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
                 where: {
                   product_part_number: data.product_part_number,
                   brand: data.brand,
+                  status: 0
                 },
               }
             );
@@ -1686,6 +1701,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
           where: {
             product_part_number: data.product_part_number,
             brand: data.brand,
+            status: 0
           },
         });
         const checkRedundantStdParts = await SPManager.findOne(StandardParts, {
@@ -1894,6 +1910,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
             where: {
               product_part_number: data.product_part_number,
               brand: data.brand,
+              status: 0
             },
           });
           const checkRedundantStdParts = await SPManager.findOne(
@@ -1992,6 +2009,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
             where: {
               product_part_number: data.product_part_number,
               brand: data.brand,
+              status: 0
             },
           });
           const checkRedundantStdParts = await SPManager.findOne(
@@ -2088,6 +2106,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
           where: {
             product_part_number: data.product_part_number,
             brand: data.brand,
+            status: 0
           },
         });
         const checkRedundantStdParts = await SPManager.findOne(StandardParts, {
@@ -2183,6 +2202,7 @@ StandardPartRouter.post("/editSP", async (req, res) => {
           where: {
             product_part_number: data.product_part_number,
             brand: data.brand,
+            status: 0
           },
         });
         const checkRedundantStdParts = await SPManager.findOne(StandardParts, {
