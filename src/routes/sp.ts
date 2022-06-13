@@ -954,7 +954,7 @@ StandardPartRouter.post("/addPendingSP", async (req, res) => {
         getNumber = (parseInt("00000000") + 1).toString().padStart(8, "0");
       } else {
         if (initial == "M0J") {
-          if (vendor == "Local Vendor") {
+          if (vendor == "LV") {
             const vendorLVData = await SPManager.query(
               `SELECT * FROM standard_parts WHERE erp_code LIKE '%M0J%' AND CONVERT(RIGHT(erp_code, 8), SIGNED) 
                             BETWEEN 1 AND 09999 ORDER BY RIGHT(erp_code, 8) DESC LIMIT 1`
@@ -963,7 +963,7 @@ StandardPartRouter.post("/addPendingSP", async (req, res) => {
               vendorLVData[0].erp_code.split("-");
             getNumber = (parseInt(numberHalf) + 1).toString().padStart(8, "0");
             vdr = "LV";
-          } else if (vendor == "Appointed Vendor") {
+          } else if (vendor == "AV") {
             const vendorAVData = await SPManager.query(
               `SELECT * FROM standard_parts WHERE erp_code LIKE '%M0J%' AND 
                             CONVERT(RIGHT(erp_code, 8), SIGNED) ORDER BY RIGHT(erp_code, 8) DESC LIMIT 1`

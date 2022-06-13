@@ -633,15 +633,16 @@ PendingPartRouter.post("/getOnePending", async (req, res) => {
 
 PendingPartRouter.post("/approvePending", async (req, res) => {
     const { id, user_id } = req.body;
+    console.log(id)
     const currentDatetime = moment().format()
     var data: any = {};
     try {
         const pending_part = await PendingManager.createQueryBuilder(PendingParts, "P")
-                                .innerJoinAndSelect("P.approveUser", "AU")
+                                .innerJoinAndSelect("P.user", "U")
                                 .innerJoinAndSelect("P.spCategory", "C")
                                 // .innerJoinAndSelect("P.approveUser", "A")
                                 .select(["P.id AS id"])
-                                .addSelect(["AU.id AS user_id"])
+                                .addSelect(["U.id AS reg_user_id"])
                                 .addSelect(["C.id AS part_id"])
                                 .addSelect([
                                     "P.type_item AS type_item",
@@ -667,7 +668,9 @@ PendingPartRouter.post("/approvePending", async (req, res) => {
                                 ])
                                 .where(`P.id = ${ id }`)
                                 .getRawOne()
-
+        
+        pending_part.user_id = user_id
+        console.log(pending_part)
         if (pending_part.status != 0 ) {
             logger.error_obj("API: " + "/approvePending", {
                 message: "API Error: Part Already Accepted or Rejected",
@@ -771,17 +774,18 @@ PendingPartRouter.post("/declinePending", async (req, res) => {
     const { id, user_id } = req.body;
     const currentDatetime = moment().format();
     try {
-        await PendingManager.update(PendingParts, { id }, 
-            {
-                approved_by : user_id,
-                status : 2,
-                update_date : currentDatetime
-            }
-        )
+        await PendingManager.delete(PendingParts, { id })
+        // await PendingManager.update(PendingParts, { id }, 
+        //     {
+        //         approved_by : user_id,
+        //         status : 2,
+        //         update_date : currentDatetime
+        //     }
+        // )
         .then((data) => {
             logger.info_obj("API: " + "/declinePending", {
                 message: "API Done",
-                value : { id, user_id },
+                value : { id, user_id, data },
                 status: true,
             });
             res.send({ data, value : { id, user_id }, status : true });
@@ -832,10 +836,10 @@ PendingPartRouter.post("/addSPPending", async (req, res) => {
             });
         }
 
-        if (vdr == "Local Vendor") {
+        if (vendor == "Local Vendor") {
             vdr = "LV";
         }
-        if (vdr == "Appointed Vendor") {
+        if (vendor == "Appointed Vendor") {
             vdr = "AV";
         }
 
@@ -866,6 +870,7 @@ PendingPartRouter.post("/addSPPending", async (req, res) => {
             where: {
                 product_part_number: data.product_part_number,
                 brand: data.brand,
+                status: 0
             },
         });
       
@@ -956,6 +961,7 @@ PendingPartRouter.post("/addSPMSPending", async (req, res) => {
                 where: {
                     product_part_number: data.product_part_number,
                     brand: data.brand,
+                    status: 0
                 },
             });
           
@@ -1040,6 +1046,7 @@ PendingPartRouter.post("/addSPMSPending", async (req, res) => {
             where: {
                 product_part_number: data.product_part_number,
                 brand: data.brand,
+                status: 0
             },
         });
       
@@ -1123,6 +1130,7 @@ PendingPartRouter.post("/editPending", async (req, res) => {
             where: {
               product_part_number: data.product_part_number,
               brand: data.brand,
+              status: 0
             },
         });
 
