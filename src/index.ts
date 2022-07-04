@@ -45,6 +45,7 @@ const main = async () => {
   app.use("/Activity", require("./routes/activity"));
   app.use("/DMT", require("./routes/dmt"));
   app.use("/UserIcon", require("./routes/usericon"));
+  app.use("/Brand", require("./routes/brand"));
 
   app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
